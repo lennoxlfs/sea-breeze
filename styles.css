@@ -187,6 +187,7 @@ em { font-style: italic; }
 .btn-book {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
   padding: 11px 24px;
   background: var(--gold);
   color: var(--text-white);
