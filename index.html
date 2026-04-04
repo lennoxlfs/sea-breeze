@@ -29,8 +29,9 @@
   <meta name="geo.position" content="13.0657;-59.5556" />
   <meta name="ICBM" content="13.0679, -59.5807" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="logo-white.svg" />
+  <!-- Favicon — teal icon visible on all browser chrome backgrounds -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
   <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,9 +39,21 @@
   <link rel="preconnect" href="https://symphony.cdn.tambourine.com" />
   <link rel="dns-prefetch" href="https://symphony.cdn.tambourine.com" />
 
+  <!-- Preload hero image for fast first paint -->
+  <link rel="preload" as="image" href="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-05-resort-01-header-6333221d8c4ec.jpeg" />
+
   <!-- Fonts — display swap for performance -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Google Tag Manager — replace GTM-XXXXXXX with your container ID -->
+  <!--
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+  -->
 
   <!-- Structured Data: Hotel / LocalBusiness -->
   <script type="application/ld+json">
@@ -203,25 +216,14 @@
   ============================================================ -->
   <section class="hero" id="hero">
 
-    <div class="hero-video-wrap">
-      <video
-        class="hero-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        poster="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-05-resort-01-header-6333221d8c4ec.jpeg"
-      >
-        <!--
-          PRIMARY VIDEO: Insert your brand video file here.
-          Local file example:  <source src="../Brand_Videos_Seabreeze/your-video.mp4" type="video/mp4" />
-          CDN fallback kept below — replace when local file is ready.
-        -->
-        <source src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse_video_hero-1-6322235255cbb.mp4" type="video/mp4" />
-        <!-- Mobile fallback: poster image above is used when video fails -->
-      </video>
-      <div class="hero-overlay"></div>
+    <!-- Hero background: CSS image slideshow — lightweight, no video dependency -->
+    <div class="hero-slideshow" aria-hidden="true">
+      <div class="hero-slide active" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-05-resort-01-header-6333221d8c4ec.jpeg')"></div>
+      <div class="hero-slide" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-01-6303a46286a45.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-gallery-img5-6320ac16847c8.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-house-firepit-1-667edd5b4993b.jpg')"></div>
     </div>
+    <div class="hero-overlay"></div>
 
     <!-- HERO CONTENT -->
     <div class="hero-content">
@@ -581,7 +583,7 @@
       <div class="awards-grid fade-in">
         <div class="award-card">
           <div class="award-badge-img">
-            <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/logo-awards-692770d20a940.svg" alt="Aspire Inclusivity Award 2025" />
+            <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/logo-awards-692770d20a940.svg" alt="Aspire Inclusivity Award 2025" loading="lazy" />
           </div>
           <div class="award-card-text">
             <h4>Aspire Inclusivity Award</h4>
@@ -591,7 +593,7 @@
         </div>
         <div class="award-card">
           <div class="award-badge-img">
-            <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/oceanhotelsbarbados-seabreezebeachhouse-sea-breeze-awards-logo-699484a91cb3b.svg" alt="Sea Breeze Awards" />
+            <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/oceanhotelsbarbados-seabreezebeachhouse-sea-breeze-awards-logo-699484a91cb3b.svg" alt="Sea Breeze Awards" loading="lazy" />
           </div>
           <div class="award-card-text">
             <h4>Booking.com Traveller Review Award</h4>
@@ -869,7 +871,7 @@
         <div class="footer-brand">
           <!-- Footer logo — same white SVG as header -->
           <a href="#" class="footer-logo-link" aria-label="Sea Breeze Beach House">
-            <img src="logo-white.svg" alt="Sea Breeze Beach House" class="footer-logo-img" width="140" height="50" />
+            <img src="logo-white.svg" alt="Sea Breeze Beach House" class="footer-logo-img" width="140" height="50" loading="lazy" />
           </a>
           <p>Maxwell Coast Road, Christ Church, Barbados BB17032</p>
           <div class="footer-socials">

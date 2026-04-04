@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sea-breeze-barbados.vercel.app/sitemap.xml

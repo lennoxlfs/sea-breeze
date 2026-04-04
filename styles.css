@@ -374,17 +374,23 @@ em { font-style: italic; }
   overflow: hidden;
 }
 
-.hero-video-wrap {
+/* Hero image slideshow — lightweight alternative to video */
+.hero-slideshow {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
-
-.hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.8s ease-in-out;
+  will-change: opacity;
+}
+.hero-slide.active {
+  opacity: 1;
 }
 
 .hero-overlay {
@@ -1402,17 +1408,8 @@ em { font-style: italic; }
   .reviews-grid { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 768px) {
-  .top-bar-socials { gap: 14px; }
-  .top-bar-socials svg { width: 14px; height: 14px; }
-  .logo-img { width: 160px; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
-  .g-item.g-wide { grid-column: span 1; }
-  .g-item.g-tall { grid-row: span 1; }
-  .reviews-grid { grid-template-columns: 1fr; }
-  .award-card { padding: 36px 24px; }
-  :root { --section-py: clamp(60px, 12vw, 100px); }
-
+/* Mobile nav collapse — 900px catches tablets where 7-item nav cramps */
+@media (max-width: 900px) {
   .main-nav {
     display: none;
     position: fixed;
@@ -1427,8 +1424,17 @@ em { font-style: italic; }
   .main-nav.open { display: flex; }
   .main-nav a { font-size: 1.2rem; color: rgba(255,255,255,0.85); letter-spacing: 0.08em; }
   .nav-toggle { display: flex; z-index: 100; position: relative; }
-
   .header-actions .btn-book { display: none; }
+  .header-socials { display: none; }
+}
+
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+  .g-item.g-wide { grid-column: span 1; }
+  .g-item.g-tall { grid-row: span 1; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .award-card { padding: 36px 24px; }
+  :root { --section-py: clamp(60px, 12vw, 100px); }
 
   .booking-fields {
     flex-direction: column;
@@ -1529,7 +1535,7 @@ em { font-style: italic; }
    PRINT STYLES
 ---------------------------------------------------------------- */
 @media print {
-  .site-header, .mobile-cta-bar, .hero-video-wrap, .booking-widget { display: none; }
+  .site-header, .mobile-cta-bar, .hero-slideshow, .booking-widget { display: none; }
   body { color: #000; background: #fff; }
   h1, h2, h3, h4, h5 { color: #000; }
   a { text-decoration: underline; }

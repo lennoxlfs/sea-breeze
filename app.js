@@ -149,3 +149,16 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     window.scrollTo({ top, behavior: 'smooth' });
   });
 });
+
+/* ----------------------------------------------------------------
+   HERO IMAGE SLIDESHOW — cycles through background images
+---------------------------------------------------------------- */
+const heroSlides = document.querySelectorAll('.hero-slide');
+if (heroSlides.length > 1) {
+  let current = 0;
+  setInterval(() => {
+    heroSlides[current].classList.remove('active');
+    current = (current + 1) % heroSlides.length;
+    heroSlides[current].classList.add('active');
+  }, 6000);
+}
