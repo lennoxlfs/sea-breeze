@@ -216,14 +216,19 @@
   ============================================================ -->
   <section class="hero" id="hero">
 
-    <!-- Hero background: CSS image slideshow — lightweight, no video dependency -->
-    <div class="hero-slideshow" aria-hidden="true">
-      <div class="hero-slide active" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-05-resort-01-header-6333221d8c4ec.jpeg')"></div>
-      <div class="hero-slide" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-01-6303a46286a45.jpg')"></div>
-      <div class="hero-slide" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-gallery-img5-6320ac16847c8.jpg')"></div>
-      <div class="hero-slide" style="background-image:url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-house-firepit-1-667edd5b4993b.jpg')"></div>
+    <div class="hero-video-wrap">
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-05-resort-01-header-6333221d8c4ec.jpeg"
+      >
+        <source src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse_video_hero-1-6322235255cbb.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
     </div>
-    <div class="hero-overlay"></div>
 
     <!-- HERO CONTENT -->
     <div class="hero-content">
