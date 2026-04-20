@@ -45,6 +45,9 @@
   <!-- Fonts — Cormorant Garamond (display serif) + Urbanist (body) -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Art-tier polish layer (additive only; loads AFTER styles.css so it can refine, not override) -->
+  <link rel="stylesheet" href="art-polish.css" />
+  <link rel="stylesheet" href="art-polish-v3.css" />
 
   <!-- Motion stack: GSAP + ScrollTrigger + Lenis. Defer so nothing blocks LCP.
        Guarded by prefers-reduced-motion in app.js. -->
@@ -240,6 +243,10 @@
 </head>
 <body>
 
+  <!-- Ambient drifting-particle canvas (paper-ink specks; behind everything).
+       Driven by art-polish.js. Paused on prefers-reduced-motion and when tab is hidden. -->
+  <canvas id="sb-ambient" aria-hidden="true"></canvas>
+
   <!-- Skip to main content for accessibility -->
   <a href="#welcome" class="skip-link">Skip to main content</a>
 
@@ -345,31 +352,15 @@
 
       <p class="hero-tagline">Every meal, every drink, every sunset —<br />all included at Maxwell Coast, Barbados.</p>
 
-      <!-- BOOKING WIDGET — Glass / frosted-glass style -->
-      <div class="booking-widget" id="booking" role="search" aria-label="Check room availability">
-        <div class="booking-fields">
-          <div class="booking-field">
-            <label for="checkin">Check-in</label>
-            <input type="date" id="checkin" aria-label="Check-in date" />
-          </div>
-          <div class="booking-divider"></div>
-          <div class="booking-field">
-            <label for="checkout">Check-out</label>
-            <input type="date" id="checkout" aria-label="Check-out date" />
-          </div>
-          <div class="booking-divider"></div>
-          <div class="booking-field">
-            <label for="guests">Guests</label>
-            <select id="guests" aria-label="Number of guests">
-              <option>1 Guest</option>
-              <option selected>2 Guests</option>
-              <option>3 Guests</option>
-              <option>4 Guests</option>
-              <option>5+ Guests</option>
-            </select>
-          </div>
-          <button class="btn-check-avail" aria-label="Check availability and book your stay">Check Availability</button>
-        </div>
+      <!-- Hero CTA — single liquid-glass button; booking widget is in the Final CTA section -->
+      <div class="hero-cta-wrap" id="booking">
+        <a href="#finalcta" class="btn-hero-book" aria-label="Book your all-inclusive stay at Sea Breeze Beach House">
+          <span class="btn-hero-label">Book Your Stay</span>
+          <span class="btn-hero-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+        <p class="hero-cta-sub">Best rate guaranteed · direct-booking perks included</p>
       </div>
     </div>
 
@@ -421,38 +412,62 @@
   </section>
 
   <!-- ============================================================
-       WELCOME / INTRO
-       Lead paragraph is written as a direct-answer block for
-       AI-search eligibility (entity, category, location, size).
+       WELCOME / INTRO + BEACH + LIQUID-GLASS METRICS
+       A single editorial block: direct-answer lead paragraph, then a
+       full-bleed turquoise beach scene with a liquid-glass metrics
+       card floating over it. AI-search eligible entity + measurable
+       scale, presented as one continuous story.
   ============================================================ -->
   <section class="welcome" id="welcome">
     <div class="container">
-      <div class="welcome-grid">
-        <div class="welcome-text reveal-left">
-          <span class="section-label">Welcome to Sea Breeze</span>
-          <h2>Where Every Day<br />Feels Like a Gift</h2>
-          <p class="lead-answer"><strong>Sea Breeze Beach House</strong> is a 4-star, 122-room all-inclusive beachfront resort on Maxwell Coast in Christ Church, Barbados — with six restaurants, five bars, three pools, Drift Spa, and complimentary water sports all included in your stay.</p>
-          <p>Nestled on the warm sands of Maxwell Coast, Sea Breeze Beach House is Barbados' finest all-inclusive escape — where azure waters, world-class dining, and the warmth of Bajan hospitality meet effortlessly.</p>
-          <p>Whether you're celebrating love, creating family memories, or simply surrendering to the rhythm of the Caribbean, Sea Breeze is your perfect shore.</p>
-          <a href="#accommodations" class="btn-outline">Explore the Resort</a>
-        </div>
-        <div class="welcome-stats">
-          <div class="stat reveal" style="--i:0">
-            <span class="stat-num" data-count="122">0</span>
-            <span class="stat-label">Rooms & Suites</span>
+      <div class="welcome-lead reveal">
+        <span class="section-label">Welcome to Sea Breeze</span>
+        <h2>Where Every Day<br />Feels Like a Gift</h2>
+        <p class="lead-answer"><strong>Sea Breeze Beach House</strong> is a 4-star, 122-room all-inclusive beachfront resort on Maxwell Coast in Christ Church, Barbados — with six restaurants, five bars, three pools, Drift Spa, and complimentary water sports all included in your stay.</p>
+        <p>Nestled on the warm sands of Maxwell Coast, Sea Breeze Beach House is Barbados' finest all-inclusive escape — where azure waters, world-class dining, and the warmth of Bajan hospitality meet effortlessly.</p>
+      </div>
+    </div>
+
+    <!-- BEACH SCENE + LIQUID GLASS METRICS — bleeds out of the cream, into the next section -->
+    <div class="beach-hero" aria-label="Sea Breeze Beach House by the numbers">
+      <div class="beach-hero-media" aria-hidden="true">
+        <div class="beach-hero-img sb-unveil" data-art-parallax="3" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-01-6303a46286a45.jpg')"></div>
+        <div class="beach-hero-tint"></div>
+        <div class="beach-hero-horizon" aria-hidden="true"></div>
+      </div>
+
+      <div class="container">
+        <div class="beach-hero-inner">
+          <p class="beach-hero-eyebrow reveal">Maxwell Coast · 13°03'57" N</p>
+          <p class="beach-hero-whisper reveal">Turquoise water. Powder-white sand.<br />Every sunset included.</p>
+
+          <!-- LIQUID GLASS METRICS CARD — frosted panel over the beach -->
+          <div class="glass-metrics reveal sb-unveil" role="list" aria-label="Resort at a glance">
+            <div class="glass-metric" role="listitem" style="--i:0">
+              <span class="glass-num" data-count="122">0</span>
+              <span class="glass-label">Rooms &amp; Suites</span>
+            </div>
+            <span class="glass-divider" aria-hidden="true"></span>
+            <div class="glass-metric" role="listitem" style="--i:1">
+              <span class="glass-num" data-count="6">0</span>
+              <span class="glass-label">Restaurants</span>
+            </div>
+            <span class="glass-divider" aria-hidden="true"></span>
+            <div class="glass-metric" role="listitem" style="--i:2">
+              <span class="glass-num" data-count="5">0</span>
+              <span class="glass-label">Bars</span>
+            </div>
+            <span class="glass-divider" aria-hidden="true"></span>
+            <div class="glass-metric" role="listitem" style="--i:3">
+              <span class="glass-num" data-count="3">0</span>
+              <span class="glass-label">Pools</span>
+            </div>
           </div>
-          <div class="stat reveal" style="--i:1">
-            <span class="stat-num" data-count="6">0</span>
-            <span class="stat-label">Restaurants</span>
-          </div>
-          <div class="stat reveal" style="--i:2">
-            <span class="stat-num" data-count="5">0</span>
-            <span class="stat-label">Bars</span>
-          </div>
-          <div class="stat reveal" style="--i:3">
-            <span class="stat-num" data-count="3">0</span>
-            <span class="stat-label">Pools</span>
-          </div>
+
+          <a href="#accommodations" class="btn-beach-explore reveal">
+            <span>Explore the Resort</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -472,28 +487,28 @@
 
     <div class="experience-grid">
       <!-- Source: Sea Breeze CDN — aerial shot of the resort beach, Maxwell Coast -->
-      <div class="exp-card large reveal" style="--i:0; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-01-6303a46286a45.jpg')">
+      <div class="exp-card large reveal sb-unveil" style="--i:0; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-01-6303a46286a45.jpg')">
         <div class="exp-overlay always">
           <h3>The Beach</h3>
           <p>Maxwell Coast's pristine shore at your door</p>
         </div>
       </div>
       <!-- Source: Sea Breeze CDN — resort pool with building, umbrellas, ocean view -->
-      <div class="exp-card reveal" style="--i:1; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-homepage-gallery-img3-630d1a4e165ef.jpg')">
+      <div class="exp-card reveal sb-unveil" style="--i:1; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-homepage-gallery-img3-630d1a4e165ef.jpg')">
         <div class="exp-overlay always">
           <h3>The Pools</h3>
           <p>Three stunning pools — adults &amp; family</p>
         </div>
       </div>
       <!-- Source: Sea Breeze CDN — guest with snorkeling gear on the beach -->
-      <div class="exp-card reveal" style="--i:2; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-12-6303a477c0edb.jpg')">
+      <div class="exp-card reveal sb-unveil" style="--i:2; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-12-6303a477c0edb.jpg')">
         <div class="exp-overlay always">
           <h3>Water Sports</h3>
           <p>Snorkeling, kayaking, windsurfing — all included</p>
         </div>
       </div>
       <!-- Source: Sea Breeze CDN — champagne on the beach with turquoise Caribbean water -->
-      <div class="exp-card reveal" style="--i:3; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-04-6303a46a6a1de.jpg')">
+      <div class="exp-card reveal sb-unveil" style="--i:3; background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-04-6303a46a6a1de.jpg')">
         <div class="exp-overlay always">
           <h3>Celebrations</h3>
           <p>Every moment deserves to be celebrated</p>
@@ -503,32 +518,95 @@
 
     <div class="container">
       <div class="inclusions reveal">
+        <span class="inclusions-eyebrow">The All-Inclusive Promise</span>
         <h3>Everything Included</h3>
+        <p class="inclusions-sub">No signing chits. No small print. Just the Caribbean — in full.</p>
         <div class="inclusions-grid">
+
+          <!-- All Meals & Drinks — hand-drawn coupe glass with olive -->
           <div class="inclusion-item reveal" style="--i:0">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <span>All Meals &amp; Drinks</span>
+            <span class="inc-icon">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle class="inc-ring" cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3" opacity=".5"/>
+                <path d="M13 14h22l-4 10a7 7 0 01-14 0z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                <path d="M24 31v6M18 37h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="29" cy="20" r="1.4" fill="currentColor" opacity=".75"/>
+              </svg>
+            </span>
+            <span class="inc-label">All Meals &amp; Drinks</span>
+            <span class="inc-detail">Six restaurants · five bars · premium spirits</span>
           </div>
+
+          <!-- Water Sports — paddleboard silhouette + wave -->
           <div class="inclusion-item reveal" style="--i:1">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <span>Water Sports</span>
+            <span class="inc-icon">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle class="inc-ring" cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3" opacity=".5"/>
+                <ellipse cx="24" cy="22" rx="10" ry="3.3" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M24 12v6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="24" cy="11" r="1.6" stroke="currentColor" stroke-width="1.1"/>
+                <path d="M10 32c3-1.5 5-1.5 7 0s4 1.5 7 0 4-1.5 7 0 4 1.5 7 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="inc-label">Water Sports</span>
+            <span class="inc-detail">Snorkel, kayak, paddleboard, windsurf</span>
           </div>
+
+          <!-- Entertainment — steel-drum sun icon -->
           <div class="inclusion-item reveal" style="--i:2">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <span>Entertainment</span>
+            <span class="inc-icon">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle class="inc-ring" cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3" opacity=".5"/>
+                <circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M24 14v20M14 24h20M17 17l14 14M31 17L17 31" stroke="currentColor" stroke-width="0.9"/>
+                <circle cx="24" cy="24" r="2.2" fill="currentColor" opacity=".75"/>
+              </svg>
+            </span>
+            <span class="inc-label">Nightly Entertainment</span>
+            <span class="inc-detail">Steel pan, live bands, Bajan culture</span>
           </div>
+
+          <!-- Airport Transfers — ink compass arrow -->
           <div class="inclusion-item reveal" style="--i:3">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="9" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
-            <span>Airport Transfers</span>
+            <span class="inc-icon">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle class="inc-ring" cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3" opacity=".5"/>
+                <circle cx="24" cy="24" r="12" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M24 12l4 16-4-4-4 4z" fill="currentColor" opacity=".85"/>
+                <circle cx="24" cy="24" r="1.4" fill="#fbf3e4"/>
+              </svg>
+            </span>
+            <span class="inc-label">Airport Transfers</span>
+            <span class="inc-detail">15 minutes from Grantley Adams Intl.</span>
           </div>
+
+          <!-- Golf Access — flag on ink line -->
           <div class="inclusion-item reveal" style="--i:4">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 22V12m0 0l3 3m-3-3l-3 3M3 17l3-3 2.5 2.5L11 14l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 7A5 5 0 007 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <span>Golf Access</span>
+            <span class="inc-icon">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle class="inc-ring" cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3" opacity=".5"/>
+                <path d="M18 36V12l14 5-14 5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                <circle cx="20" cy="36" r="2" fill="currentColor" opacity=".6"/>
+                <path d="M14 36h20" stroke="currentColor" stroke-width="0.8" stroke-dasharray="1 3"/>
+              </svg>
+            </span>
+            <span class="inc-label">Golf Access</span>
+            <span class="inc-detail">Complimentary for Luxury Collection</span>
           </div>
+
+          <!-- Kids Club — hibiscus bloom -->
           <div class="inclusion-item reveal" style="--i:5">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="1.5"/></svg>
-            <span>Kids Club</span>
+            <span class="inc-icon">
+              <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                <circle class="inc-ring" cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 3" opacity=".5"/>
+                <path d="M24 14c3 2 3 5 0 7-3-2-3-5 0-7zM34 24c-2 3-5 3-7 0 2-3 5-3 7 0zM24 34c-3-2-3-5 0-7 3 2 3 5 0 7zM14 24c2-3 5-3 7 0-2 3-5 3-7 0z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                <circle cx="24" cy="24" r="2.2" fill="currentColor" opacity=".8"/>
+              </svg>
+            </span>
+            <span class="inc-label">Family &amp; Kids Club</span>
+            <span class="inc-detail">Supervised play, pool games, movie nights</span>
           </div>
+
         </div>
       </div>
     </div>
@@ -548,64 +626,64 @@
     </div>
     <div class="gallery-grid">
       <!-- Row 1: wide + tall + square -->
-      <figure class="g-item g-wide reveal" style="--i:0">
+      <figure class="g-item g-wide reveal sb-unveil" style="--i:0">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-01-6303a46286a45.jpg"
              alt="Aerial view of Sea Breeze Beach House on Maxwell Coast, Barbados — pristine turquoise water and white-sand beach."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item g-tall reveal" style="--i:1">
+      <figure class="g-item g-tall reveal sb-unveil" style="--i:1">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-homepage-gallery-img4-630d1a4fd7462.jpg"
              alt="Classic Collection room at Sea Breeze Beach House with Caribbean-inspired decor and ocean view."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:2">
+      <figure class="g-item reveal sb-unveil" style="--i:2">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-04-6303a46a6a1de.jpg"
              alt="Chilled champagne on the sand at Sea Breeze Beach House, looking out over the Caribbean Sea."
              loading="lazy" decoding="async" />
       </figure>
       <!-- Row 2 -->
-      <figure class="g-item reveal" style="--i:3">
+      <figure class="g-item reveal sb-unveil" style="--i:3">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-homepage-gallery-img3-630d1a4e165ef.jpg"
              alt="Resort pool at Sea Breeze Beach House surrounded by sun loungers with an ocean backdrop."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:4">
+      <figure class="g-item reveal sb-unveil" style="--i:4">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-gallery-img5-6320ac16847c8.jpg"
              alt="Guest walking along Maxwell Coast beach beside the turquoise Caribbean."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item g-wide reveal" style="--i:5">
+      <figure class="g-item g-wide reveal sb-unveil" style="--i:5">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-07-6303a46f3123c.jpg"
              alt="Luxury Ocean Suite balcony at Sea Breeze Beach House with tropical cocktails and a direct sea view."
              loading="lazy" decoding="async" />
       </figure>
       <!-- Row 3 -->
-      <figure class="g-item reveal" style="--i:6">
+      <figure class="g-item reveal sb-unveil" style="--i:6">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-house-firepit-1-667edd5b4993b.jpg"
              alt="Evening fire-pit terrace at Sea Breeze Beach House overlooking the ocean at dusk."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:7">
+      <figure class="g-item reveal sb-unveil" style="--i:7">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/rlv09876-1-6853014f5f8f6.jpg"
              alt="Bajan hospitality moment inside Sea Breeze Beach House — warm local service."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:8">
+      <figure class="g-item reveal sb-unveil" style="--i:8">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-house-reception-1-667edd5c83065.jpg"
              alt="Open-air reception lobby at Sea Breeze Beach House with Caribbean architectural details."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:9">
+      <figure class="g-item reveal sb-unveil" style="--i:9">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/rlv09940-68530159b64f4.jpg"
              alt="Tropical cocktails being shared at a Sea Breeze Beach House bar — part of the all-inclusive experience."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:10">
+      <figure class="g-item reveal sb-unveil" style="--i:10">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-gallery-img1-6320ac0f67c62.jpg"
              alt="Sun loungers on the powder-white sand of Sea Breeze Beach House's private beach."
              loading="lazy" decoding="async" />
       </figure>
-      <figure class="g-item reveal" style="--i:11">
+      <figure class="g-item reveal sb-unveil" style="--i:11">
         <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-12-6303a477c0edb.jpg"
              alt="Guest enjoying complimentary snorkelling equipment on the beach at Sea Breeze Beach House."
              loading="lazy" decoding="async" />
@@ -670,17 +748,6 @@
 
       </div>
 
-      <div class="sister-property reveal-slow reveal">
-        <div class="sister-inner">
-          <div class="sister-text">
-            <span class="section-label">Stay in One, Play in Two</span>
-            <h3>Discover O2 Beach Club</h3>
-            <p>As a Sea Breeze guest, unlock exclusive access to our sister property O2 Beach Club &amp; Spa — including the acclaimed Oro restaurant and premium evening experiences.</p>
-          </div>
-          <a href="#booking" class="btn-outline-light">Learn More</a>
-        </div>
-      </div>
-
       <!-- ========================================================
            WHY BOOK DIRECT — trust micro-strip called for in the
            LFS internal sales report (vs. OTA leakage).
@@ -713,7 +780,7 @@
       <div class="dining-grid">
 
         <!-- Source: Sea Breeze CDN — pool terrace & ocean panorama (Aqua Terra setting) -->
-        <div class="dining-card reveal" style="--i:0">
+        <div class="dining-card reveal sb-unveil" style="--i:0">
           <div class="dining-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-10-6303a473d46ac.jpg')"></div>
           <div class="dining-info">
             <h4>Aqua Terra</h4>
@@ -723,7 +790,7 @@
         </div>
 
         <!-- Source: Sea Breeze CDN — rooftop fire pit terrace overlooking the ocean (Cerulean ambience) -->
-        <div class="dining-card reveal" style="--i:1">
+        <div class="dining-card reveal sb-unveil" style="--i:1">
           <div class="dining-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-house-firepit-1-667edd5b4993b.jpg')"></div>
           <div class="dining-info">
             <h4>Cerulean</h4>
@@ -733,7 +800,7 @@
         </div>
 
         <!-- Source: Sea Breeze CDN — casual beach lounge setting (Flying Fish atmosphere) -->
-        <div class="dining-card reveal" style="--i:2">
+        <div class="dining-card reveal sb-unveil" style="--i:2">
           <div class="dining-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-gallery-img3-6320ac130ef80.jpg')"></div>
           <div class="dining-info">
             <h4>The Flying Fish</h4>
@@ -743,7 +810,7 @@
         </div>
 
         <!-- Source: Sea Breeze CDN — bar service at the resort (Mahogany / evening entertainment) -->
-        <div class="dining-card reveal" style="--i:3">
+        <div class="dining-card reveal sb-unveil" style="--i:3">
           <div class="dining-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/rlv00001-6853029fb7af0.jpg')"></div>
           <div class="dining-info">
             <h4>Mahogany Lounge</h4>
@@ -753,7 +820,7 @@
         </div>
 
         <!-- Source: Sea Breeze CDN — Bajan staff smiling at bar (De Rum Shop atmosphere) -->
-        <div class="dining-card reveal" style="--i:4">
+        <div class="dining-card reveal sb-unveil" style="--i:4">
           <div class="dining-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/rlv09842-6853077b97aff.jpg')"></div>
           <div class="dining-info">
             <h4>De Rum Shop Café</h4>
@@ -763,7 +830,7 @@
         </div>
 
         <!-- Source: Sea Breeze CDN — tropical cocktails cheers (Dine at Oro / premium evening) -->
-        <div class="dining-card reveal" style="--i:5">
+        <div class="dining-card reveal sb-unveil" style="--i:5">
           <div class="dining-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/rlv09940-68530159b64f4.jpg')"></div>
           <div class="dining-info">
             <h4>Dine at Oro</h4>
@@ -798,8 +865,9 @@
           </div>
         </div>
         <div class="award-card reveal" style="--i:1">
-          <div class="award-badge-img">
-            <img src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/oceanhotelsbarbados-seabreezebeachhouse-sea-breeze-awards-logo-699484a91cb3b.svg" alt="Sea Breeze Awards" loading="lazy" />
+          <div class="award-badge-img award-badge-score" aria-hidden="true">
+            <span class="award-score">9.1</span>
+            <span class="award-score-label">Booking.com<br />Traveller Review</span>
           </div>
           <div class="award-card-text">
             <h4>Booking.com Traveller Review Award</h4>
@@ -838,10 +906,11 @@
             <a href="#booking" class="btn-outline-light">Book a Treatment</a>
           </div>
           <div class="spa-visual reveal-right" data-parallax>
-            <div class="spa-img-wrap">
-              <!-- Source: Sea Breeze CDN — actual Drift Spa treatment room interior -->
-              <div class="spa-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/oceanhotelspartnership-driftspa-gallery-02-658c5984959b3.jpg')"></div>
+            <div class="spa-img-wrap sb-unveil">
+              <!-- Source: Sea Breeze CDN — Maxwell Coast beach at dusk; evokes the "drift away" promise -->
+              <div class="spa-img" style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-gallery-img5-6320ac16847c8.jpg')"></div>
             </div>
+            <figcaption class="spa-caption">Maxwell Coast at dusk — steps from every treatment room.</figcaption>
           </div>
         </div>
       </div>
@@ -849,7 +918,9 @@
   </section>
 
   <!-- ============================================================
-       CELEBRATIONS
+       CELEBRATIONS — Editorial tryptich.
+       Three stacked "chapters": large hero image left, narrative
+       right. Each flips direction. Romantic, intentional, slow.
   ============================================================ -->
   <section class="weddings" id="weddings">
     <div class="container">
@@ -859,28 +930,74 @@
         <p>From intimate proposals to destination weddings for 150 — Sea Breeze turns your celebration into something extraordinary.</p>
       </div>
 
-      <div class="celebration-grid">
-        <div class="celebration-card reveal" style="--i:0">
-          <div class="celebration-icon">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="celebration-stack">
+
+        <!-- 01 — WEDDINGS — image left, text right -->
+        <article class="celebration-chapter" data-dir="left" style="--i:0">
+          <figure class="celebration-media reveal-left sb-unveil" data-art-parallax="2">
+            <div class="celebration-img" role="img" aria-label="Bride and groom embracing at sunset on Maxwell Coast beach at Sea Breeze Beach House"
+                 style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-04-6303a46a6a1de.jpg')"></div>
+            <figcaption class="celebration-caption">Beachfront ceremony · Maxwell Coast</figcaption>
+          </figure>
+          <div class="celebration-narrative reveal-right">
+            <span class="celebration-chapter-num">— 01 —</span>
+            <span class="celebration-eyebrow">Weddings</span>
+            <h3>Say "I do"<br /><em>barefoot in the Caribbean.</em></h3>
+            <p class="celebration-lede">Three bespoke packages · certified wedding planners · one-wedding-per-day guarantee.</p>
+            <p>From a 10-guest elopement on the sand to a 150-guest garden ceremony, every detail is handled with Bajan warmth — so the only thing you carry that day is your bouquet.</p>
+            <ul class="celebration-list" role="list">
+              <li>Dedicated on-site wedding planner</li>
+              <li>Beachfront, garden &amp; rooftop settings</li>
+              <li>Customisable menus from six restaurants</li>
+            </ul>
+            <a href="#finalcta" class="btn-outline celebration-cta">Enquire about Weddings</a>
           </div>
-          <h4>Weddings</h4>
-          <p>Three bespoke packages, certified planners, and a one-wedding-per-day guarantee. Up to 150 guests, beachfront or garden settings.</p>
-        </div>
-        <div class="celebration-card reveal" style="--i:1">
-          <div class="celebration-icon">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </article>
+
+        <!-- 02 — HONEYMOONS — image right, text left -->
+        <article class="celebration-chapter" data-dir="right" style="--i:1">
+          <figure class="celebration-media reveal-right sb-unveil" data-art-parallax="2">
+            <div class="celebration-img" role="img" aria-label="Couple kissing on the beach at Sea Breeze Beach House, Barbados — honeymoon setting"
+                 style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-11-gallery-07-6303a46f3123c.jpg')"></div>
+            <figcaption class="celebration-caption">Private balcony · Luxury Ocean Suite</figcaption>
+          </figure>
+          <div class="celebration-narrative reveal-left">
+            <span class="celebration-chapter-num">— 02 —</span>
+            <span class="celebration-eyebrow">Honeymoons</span>
+            <h3>Just the two of you,<br /><em>and the whole Caribbean.</em></h3>
+            <p class="celebration-lede">Complimentary honeymoon package on stays of three nights or more.</p>
+            <p>Champagne arrival, private dining on the sand, couples massage at Drift Spa, and a room upgrade when available — little moments designed for the start of forever.</p>
+            <ul class="celebration-list" role="list">
+              <li>Champagne &amp; fruit arrival amenity</li>
+              <li>Private beach dinner for two</li>
+              <li>Couples massage at Drift Spa</li>
+            </ul>
+            <a href="#finalcta" class="btn-outline celebration-cta">Plan your Honeymoon</a>
           </div>
-          <h4>Honeymoons</h4>
-          <p>Complimentary honeymoon package (3+ nights) with champagne arrival, private dining, and couple-centric experiences.</p>
-        </div>
-        <div class="celebration-card reveal" style="--i:2">
-          <div class="celebration-icon">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </article>
+
+        <!-- 03 — PROPOSALS — image left, text right -->
+        <article class="celebration-chapter" data-dir="left" style="--i:2">
+          <figure class="celebration-media reveal-left sb-unveil" data-art-parallax="2">
+            <div class="celebration-img" role="img" aria-label="Romantic sunset moment at Sea Breeze Beach House, Barbados — proposal setting"
+                 style="background-image: url('https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/sea-breeze-beach-house-firepit-1-667edd5b4993b.jpg')"></div>
+            <figcaption class="celebration-caption">Golden hour · private beach setup</figcaption>
+          </figure>
+          <div class="celebration-narrative reveal-right">
+            <span class="celebration-chapter-num">— 03 —</span>
+            <span class="celebration-eyebrow">Proposals</span>
+            <h3>Ask the question<br /><em>to a Caribbean sunset.</em></h3>
+            <p class="celebration-lede">Our Proposal Concierge crafts the moment — down to the last rose petal.</p>
+            <p>Private beach setup, chilled champagne, live acoustic guitar, a photographer tucked just out of frame. Every detail choreographed so you can be fully present.</p>
+            <ul class="celebration-list" role="list">
+              <li>Sunset beach staging &amp; floral design</li>
+              <li>Champagne, glassware &amp; canapés</li>
+              <li>Optional photographer &amp; musician</li>
+            </ul>
+            <a href="#finalcta" class="btn-outline celebration-cta">Plan your Proposal</a>
           </div>
-          <h4>Proposals</h4>
-          <p>Our Proposal Concierge crafts the perfect moment — sunset beach setup, champagne, photography, and every detail handled.</p>
-        </div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -993,47 +1110,102 @@
   </section>
 
   <!-- ============================================================
-       FAQ — Visible answers that mirror FAQPage schema above.
-       Written for AI-search eligibility (direct, specific,
-       entity-rich) and pre-booking conversion questions.
+       FAQ — Editorial two-column with cartographer side-panel.
+       Left: brand header + decorative ink rule on cream paper.
+       Right: numbered chapter-style Q&A with generous vertical
+       rhythm, expanding on click. Mirrors FAQPage schema above.
   ============================================================ -->
   <section class="faq" id="faq" aria-label="Frequently asked questions">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">Before You Book</span>
-        <h2>Your Questions,<br />Answered.</h2>
-      </div>
+      <div class="faq-layout">
 
-      <div class="faq-list reveal">
-        <details class="faq-item">
-          <summary>Is Sea Breeze Beach House truly all-inclusive?</summary>
-          <p>Yes. Your stay includes all meals and beverages (including premium spirits), nightly entertainment, non-motorized water sports, airport transfers, and access to six restaurants and five bars — with no signing of chits or surprise charges.</p>
-        </details>
+        <!-- LEFT — cartographer paper anchor -->
+        <aside class="faq-aside reveal-left">
+          <span class="section-label">Before You Book</span>
+          <h2>Your Questions,<br /><em>Answered.</em></h2>
+          <div class="faq-rule" aria-hidden="true">
+            <svg viewBox="0 0 200 14" preserveAspectRatio="none">
+              <path d="M2 7 Q 50 1, 100 7 T 198 7" stroke="currentColor" stroke-width="0.9" fill="none" />
+              <circle cx="100" cy="7" r="2" fill="currentColor"/>
+            </svg>
+          </div>
+          <p class="faq-aside-note">Six answers we wish every guest knew before they arrived. If your question isn't here, our team answers every email within the day.</p>
+          <div class="faq-contact">
+            <a href="mailto:stay@sea-breeze.com" class="faq-contact-link">stay@sea-breeze.com</a>
+            <a href="tel:+12464289441" class="faq-contact-link">+1 (246) 428-9441</a>
+          </div>
+        </aside>
 
-        <details class="faq-item">
-          <summary>How far is Sea Breeze from Grantley Adams International Airport?</summary>
-          <p>Approximately 15 minutes by car. Complimentary airport transfers are included with your all-inclusive stay.</p>
-        </details>
+        <!-- RIGHT — numbered chapter list -->
+        <div class="faq-chapters reveal-right">
 
-        <details class="faq-item">
-          <summary>Does every room have an ocean view?</summary>
-          <p>Every room at Sea Breeze Beach House faces the Caribbean Sea. Classic Collection rooms offer pool, garden, or ocean views, and all Luxury Ocean Suites feature direct ocean-view balconies.</p>
-        </details>
+          <details class="faq-chapter" open>
+            <summary>
+              <span class="faq-num">01</span>
+              <span class="faq-q">Is Sea Breeze Beach House truly all-inclusive?</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              <p>Yes. Your stay includes all meals and beverages (including premium spirits), nightly entertainment, non-motorised water sports, airport transfers, and access to six restaurants and five bars — with no signing of chits or surprise charges.</p>
+            </div>
+          </details>
 
-        <details class="faq-item">
-          <summary>Are water sports included in the all-inclusive package?</summary>
-          <p>Yes. Complimentary non-motorized water sports include snorkeling, kayaking, paddleboarding, and windsurfing on our Maxwell Coast beach.</p>
-        </details>
+          <details class="faq-chapter">
+            <summary>
+              <span class="faq-num">02</span>
+              <span class="faq-q">How far is Sea Breeze from Grantley Adams International Airport?</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              <p>Approximately 15 minutes by car. Complimentary airport transfers are included with your all-inclusive stay.</p>
+            </div>
+          </details>
 
-        <details class="faq-item">
-          <summary>Can I host a wedding at Sea Breeze Beach House?</summary>
-          <p>Yes. Sea Breeze offers three bespoke wedding packages with certified wedding planners, a one-wedding-per-day guarantee, and beachfront or garden ceremony settings for up to 150 guests.</p>
-        </details>
+          <details class="faq-chapter">
+            <summary>
+              <span class="faq-num">03</span>
+              <span class="faq-q">Does every room have an ocean view?</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              <p>Every room at Sea Breeze Beach House faces the Caribbean Sea. Classic Collection rooms offer pool, garden, or ocean views, and all Luxury Ocean Suites feature direct ocean-view balconies.</p>
+            </div>
+          </details>
 
-        <details class="faq-item">
-          <summary>Is there a spa on-site?</summary>
-          <p>Yes. Drift Spa offers massage therapies, bespoke facials, manicures, pedicures, and couples treatments using premium VIVANT® Skin Care products in a tranquil beachside setting.</p>
-        </details>
+          <details class="faq-chapter">
+            <summary>
+              <span class="faq-num">04</span>
+              <span class="faq-q">Are water sports included in the all-inclusive package?</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              <p>Yes. Complimentary non-motorised water sports include snorkelling, kayaking, paddleboarding, and windsurfing on our Maxwell Coast beach.</p>
+            </div>
+          </details>
+
+          <details class="faq-chapter">
+            <summary>
+              <span class="faq-num">05</span>
+              <span class="faq-q">Can I host a wedding at Sea Breeze Beach House?</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              <p>Yes. Sea Breeze offers three bespoke wedding packages with certified wedding planners, a one-wedding-per-day guarantee, and beachfront or garden ceremony settings for up to 150 guests.</p>
+            </div>
+          </details>
+
+          <details class="faq-chapter">
+            <summary>
+              <span class="faq-num">06</span>
+              <span class="faq-q">Is there a spa on-site?</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-a">
+              <p>Yes. Drift Spa offers massage therapies, bespoke facials, manicures, pedicures, and couples treatments using premium VIVANT® Skin Care products in a tranquil beachside setting.</p>
+            </div>
+          </details>
+
+        </div>
       </div>
     </div>
   </section>
@@ -1183,7 +1355,7 @@
       <div class="barbados-grid">
 
         <!-- LEFT: vintage Bellin 1758 engraving floating on the paper -->
-        <figure class="barbados-island reveal-left" aria-label="Map of Barbados (Bellin 1758) showing Sea Breeze Beach House on Maxwell Coast">
+        <figure class="barbados-island reveal-left sb-unveil" data-art-parallax="4" aria-label="Map of Barbados (Bellin 1758) showing Sea Breeze Beach House on Maxwell Coast">
           <svg viewBox="0 0 600 720" role="img" aria-label="Barbados — Bellin 1758 chart" class="island-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
             <!-- Historical engraving — blends into the cream paper via multiply -->
@@ -1391,5 +1563,11 @@
   </div>
 
   <script src="app.js"></script>
+  <!-- Art-tier polish JS: ambient canvas, clip-path unveils, gallery stagger, gentle art-parallax.
+       Loads AFTER app.js so it can safely reuse GSAP/ScrollTrigger. All effects respect prefers-reduced-motion. -->
+  <script defer src="art-polish.js"></script>
+  <!-- Art-motion v3: editorial round-2 motion — glass metric count-up, celebration chapter reveals,
+       FAQ pulse, beach-hero mouse parallax, section blend-through. -->
+  <script defer src="art-motion-v3.js"></script>
 </body>
 </html>
