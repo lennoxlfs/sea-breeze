@@ -92,6 +92,54 @@ function bootMotion() {
       run();
     }
   }
+
+  // Hero → next-section scroll blend. As the user scrolls through the hero,
+  // the video fades + subtly zooms while the bottom fade (CSS) deepens. Gives
+  // the feel of the footage dissolving into the cream trust strip below.
+  if (hasGSAP && window.ScrollTrigger && !prefersReducedMotion) {
+    const heroEl  = document.getElementById('hero');
+    const videoEl = heroEl && heroEl.querySelector('.hero-video');
+    const fadeEl  = heroEl && heroEl.querySelector('.hero-fade');
+    const contentEl = heroEl && heroEl.querySelector('.hero-content');
+    if (heroEl && videoEl) {
+      window.gsap.to(videoEl, {
+        opacity: 0.25,
+        scale: 1.06,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroEl,
+          start: 'top top',
+          end:   'bottom top',
+          scrub: 0.6
+        }
+      });
+      if (contentEl) {
+        window.gsap.to(contentEl, {
+          opacity: 0,
+          y: -40,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroEl,
+            start: 'top top',
+            end:   '70% top',
+            scrub: 0.6
+          }
+        });
+      }
+      if (fadeEl) {
+        window.gsap.to(fadeEl, {
+          opacity: 1.25, // overshoot — clamped by compositing to 1, but scrub feels firmer
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroEl,
+            start: 'top top',
+            end:   'bottom top',
+            scrub: 0.6
+          }
+        });
+      }
+    }
+  }
 }
 
 if (document.readyState === 'loading') {

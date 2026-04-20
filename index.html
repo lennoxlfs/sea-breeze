@@ -324,6 +324,8 @@
         <source src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse_video_hero-1-6322235255cbb.mp4" type="video/mp4" />
       </video>
       <div class="hero-overlay"></div>
+      <!-- Bottom fade — video dissolves into the cream trust strip below -->
+      <div class="hero-fade" aria-hidden="true"></div>
     </div>
 
     <!-- HERO CONTENT -->
@@ -380,17 +382,40 @@
   </section>
 
   <!-- ============================================================
-       TRUST STRIP — Visible social proof directly below hero.
-       Surfaces the 4.4★ / 768 reviews / awards that research
-       flagged as "invisible on the current site".
+       TRUST STRIP — Rating pills across booking platforms.
+       Each pill stagger-reveals on scroll via .reveal.
   ============================================================ -->
-  <section class="trust-strip" aria-label="Trust and recognition">
+  <section class="trust-strip" aria-label="Guest ratings across booking platforms">
     <div class="container">
       <ul class="trust-row" role="list">
-        <li><span class="trust-stars" aria-hidden="true">★★★★★</span><span>4.4 · 768 Google reviews</span></li>
-        <li><span>Aspire Inclusivity Award 2025</span></li>
-        <li><span>Booking.com Traveller Review 2026</span></li>
-        <li><span>AAA Rated · Ocean Hotels</span></li>
+        <li class="reveal" style="--i:0">
+          <a class="trust-pill" href="https://www.google.com/search?q=Sea+Breeze+Beach+House+Barbados+reviews" target="_blank" rel="noopener" aria-label="See our 4.4-star Google reviews — 768 reviews">
+            <span class="trust-dot" data-platform="google" aria-hidden="true"></span>
+            <span class="trust-rating"><span class="trust-star" aria-hidden="true">★</span>4.4</span>
+            <span class="trust-meta"><span class="trust-platform">Google</span><span class="trust-count">768 reviews</span></span>
+          </a>
+        </li>
+        <li class="reveal" style="--i:1">
+          <a class="trust-pill" href="https://www.tripadvisor.com/Hotel_Review-g293871-d593066-Reviews-Sea_Breeze_Beach_House-Saint_Lawrence_Gap_Christ_Church_Parish_Barbados.html" target="_blank" rel="noopener" aria-label="Read our Tripadvisor reviews — 4.5 stars, Travellers' Choice">
+            <span class="trust-dot" data-platform="tripadvisor" aria-hidden="true"></span>
+            <span class="trust-rating"><span class="trust-star" aria-hidden="true">★</span>4.5</span>
+            <span class="trust-meta"><span class="trust-platform">Tripadvisor</span><span class="trust-count">Travellers' Choice</span></span>
+          </a>
+        </li>
+        <li class="reveal" style="--i:2">
+          <a class="trust-pill" href="https://www.booking.com/hotel/bb/sea-breeze-beach-house.html" target="_blank" rel="noopener" aria-label="Booking.com Traveller Review Award 2026 — 9.1 out of 10">
+            <span class="trust-dot" data-platform="booking" aria-hidden="true"></span>
+            <span class="trust-rating">9.1</span>
+            <span class="trust-meta"><span class="trust-platform">Booking.com</span><span class="trust-count">Traveller Award 2026</span></span>
+          </a>
+        </li>
+        <li class="reveal" style="--i:3">
+          <a class="trust-pill" href="#awards" aria-label="See our Aspire Inclusivity Award 2025">
+            <span class="trust-dot" data-platform="aspire" aria-hidden="true"></span>
+            <span class="trust-rating">2025</span>
+            <span class="trust-meta"><span class="trust-platform">Aspire</span><span class="trust-count">Inclusivity Award</span></span>
+          </a>
+        </li>
       </ul>
     </div>
   </section>

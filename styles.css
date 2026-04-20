@@ -830,7 +830,7 @@ em { font-style: italic; }
   bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1;
+  z-index: 2;
   color: rgba(255,255,255,0.5);
   animation: bounce 2.4s ease-in-out infinite;
   transition: color 0.2s;
@@ -841,35 +841,136 @@ em { font-style: italic; }
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
+/* Bottom fade — seamless dissolve from hero video into the cream
+   trust strip below. Sits above overlay, below hero-content.
+   Starts partial so GSAP scroll-scrub can firm it up on scroll. */
+.hero-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32vh;
+  pointer-events: none;
+  opacity: 0.85;
+  background: linear-gradient(
+    to bottom,
+    rgba(246, 243, 239, 0) 0%,
+    rgba(246, 243, 239, 0) 32%,
+    rgba(246, 243, 239, 0.55) 70%,
+    var(--cream) 100%
+  );
+}
+
 /* ----------------------------------------------------------------
-   TRUST STRIP — simple social-proof row under the hero
+   TRUST STRIP — glass pills with platform-colored dots
 ---------------------------------------------------------------- */
 .trust-strip {
-  padding: 28px 0;
+  position: relative;
+  padding: 36px 0;
   background: var(--cream);
-  border-bottom: 1px solid rgba(0,57,77,0.08);
+  border-bottom: 1px solid rgba(0, 57, 77, 0.08);
 }
 .trust-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 40px;
+  gap: 14px;
   flex-wrap: wrap;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--deep-teal);
 }
-.trust-row li {
+.trust-row > li {
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.trust-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
+  padding: 10px 20px 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--deep-teal);
+  background: #ffffff;
+  border: 1px solid rgba(0, 57, 77, 0.1);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 24px -14px rgba(0, 57, 77, 0.3);
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out);
 }
-.trust-stars {
+.trust-pill:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 57, 77, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 18px 34px -16px rgba(0, 57, 77, 0.4);
+}
+.trust-pill:focus-visible {
+  outline: 2px solid var(--teal-accent);
+  outline-offset: 3px;
+}
+
+.trust-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--deep-teal);
+  box-shadow: 0 0 0 3px rgba(0, 57, 77, 0.1);
+  transition: box-shadow 0.35s var(--ease-out);
+}
+.trust-pill:hover .trust-dot { box-shadow: 0 0 0 4px rgba(0, 57, 77, 0.16); }
+.trust-dot[data-platform="google"]      { background: #4285F4; box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.16); }
+.trust-dot[data-platform="tripadvisor"] { background: #00AA6C; box-shadow: 0 0 0 3px rgba(0, 170, 108, 0.16); }
+.trust-dot[data-platform="booking"]     { background: #003580; box-shadow: 0 0 0 3px rgba(0, 53, 128, 0.16); }
+.trust-dot[data-platform="aspire"]      { background: var(--gold); box-shadow: 0 0 0 3px rgba(193, 146, 95, 0.22); }
+
+.trust-rating {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--deep-teal);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.trust-star {
   color: var(--gold);
-  letter-spacing: 0.05em;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+.trust-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.15;
+  font-family: var(--font-body);
+}
+.trust-platform {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--deep-teal);
+}
+.trust-count {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@media (max-width: 720px) {
+  .trust-strip { padding: 26px 0; }
+  .trust-row { gap: 10px; }
+  .trust-pill { padding: 8px 16px 8px 12px; gap: 10px; }
+  .trust-rating { font-size: 1.1rem; }
+  .trust-count { font-size: 0.6rem; }
+  .hero-fade { height: 24vh; }
 }
 
 /* ----------------------------------------------------------------
