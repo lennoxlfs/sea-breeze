@@ -247,6 +247,32 @@ em { font-style: italic; }
   transform: translateY(0);
 }
 
+/* Respect users who prefer reduced motion: kill transitions, zoom,
+   scroll-smoothing, and the translateY on fade-in so nothing moves
+   unexpectedly. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade-in,
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .g-item,
+  .g-item > img,
+  .dining-img,
+  .exp-card,
+  .hero-video {
+    transition: none !important;
+    animation: none !important;
+  }
+  .g-item:hover,
+  .g-item:hover > img,
+  .dining-card:hover .dining-img {
+    transform: none;
+  }
+}
+
 /* ----------------------------------------------------------------
    HEADER
 ---------------------------------------------------------------- */
@@ -876,14 +902,22 @@ em { font-style: italic; }
   margin: 48px 0 32px;
 }
 .g-item {
-  background-size: cover;
-  background-position: center;
+  margin: 0;
   overflow: hidden;
   position: relative;
   cursor: pointer;
   transition: transform 0.5s var(--ease-out);
 }
+.g-item > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s var(--ease-out);
+}
 .g-item:hover { transform: scale(1.02); z-index: 1; }
+.g-item:hover > img { transform: scale(1.03); }
 .g-item.g-wide  { grid-column: span 2; }
 .g-item.g-tall  { grid-row: span 2; }
 

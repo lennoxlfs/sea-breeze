@@ -1,3 +1,46 @@
+# Sea Breeze Beach House — robots.txt
+# LFS Web Brain v7 — explicit allowances for search + AI crawlers.
+
+# Default: allow all well-behaved crawlers
 User-agent: *
 Allow: /
+
+# Major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# AI-search crawlers (opted in for AI-overview eligibility)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://sea-breeze-barbados.vercel.app/sitemap.xml
