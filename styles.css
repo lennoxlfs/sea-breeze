@@ -1694,10 +1694,10 @@ em { font-style: italic; }
 .barbados-island {
   position: relative;
   margin: 0;
-  aspect-ratio: 420 / 600;
-  max-width: 520px;
-  /* subtle ground shadow so the island feels slightly lifted off the paper */
-  filter: drop-shadow(0 18px 28px rgba(60, 38, 18, 0.18));
+  aspect-ratio: 600 / 720;
+  max-width: 560px;
+  /* subtle ground shadow so the chart feels slightly lifted off the paper */
+  filter: drop-shadow(0 22px 32px rgba(60, 38, 18, 0.22));
 }
 .island-svg {
   display: block;
@@ -1705,39 +1705,30 @@ em { font-style: italic; }
   height: 100%;
   overflow: visible;
 }
-
-/* Island stroke-draw animation — JS flips .is-in when scrolled in */
-.map-island {
-  stroke-dasharray: 2400;
-  stroke-dashoffset: 2400;
-  transition: stroke-dashoffset 2200ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-left.is-in .map-island {
-  stroke-dashoffset: 0;
-}
-.map-island-echo {
+/* Bellin engraving — multiply blend lets the paper tone of the chart
+   dissolve into the section's cream paper; only the ink survives. */
+.map-bellin {
+  mix-blend-mode: multiply;
   opacity: 0;
-  transition: opacity 1400ms ease 1100ms;
+  filter: blur(6px) saturate(0.85) contrast(1.02);
+  transform: scale(1.015);
+  transform-origin: 50% 50%;
+  transition:
+    opacity 1800ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1800ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal-left.is-in .map-island-echo {
+.reveal-left.is-in .map-bellin {
   opacity: 1;
+  filter: blur(0) saturate(0.9) contrast(1.04);
+  transform: scale(1);
 }
 
-/* Island interior flourishes fade in after coastline draws */
-.map-hachure,
-.map-places {
-  opacity: 0;
-  transition: opacity 900ms ease 1400ms;
-}
-.reveal-left.is-in .map-hachure,
-.reveal-left.is-in .map-places {
-  opacity: 1;
-}
-
-/* Pin — only fully visible after the coastline has drawn, then pulses */
+/* Pin — drops in once the engraving has settled, then pulses */
 .map-pin {
   opacity: 0;
-  transition: opacity 600ms ease 1900ms;
+  transform-origin: 310px 560px;
+  transition: opacity 600ms ease 1600ms;
 }
 .reveal-left.is-in .map-pin {
   opacity: 1;
