@@ -1,5 +1,5 @@
 /* ================================================================
-   SEA BREEZE BEACH HOUSE — App JS
+   SEA BREEZE BEACH HOUSE — App JS  (art-tier v1)
    ================================================================ */
 
 /* ----------------------------------------------------------------
@@ -18,6 +18,86 @@ function trackEvent(name, params) {
       window.gtag('event', name, params || {});
     }
   } catch (_) { /* silent — analytics must never break UX */ }
+}
+
+/* ----------------------------------------------------------------
+   MOTION BOOT — Lenis smooth scroll + GSAP ticker sync
+   Reduced-motion users get native scroll, no Lenis, no easing.
+---------------------------------------------------------------- */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let lenis = null;
+function bootMotion() {
+  const hasLenis = typeof window.Lenis === 'function';
+  const hasGSAP  = typeof window.gsap === 'object';
+
+  if (prefersReducedMotion || !hasLenis) {
+    // Fallback to native scroll. Phase-1 reveals still fire via IntersectionObserver below.
+    document.documentElement.style.scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+  } else {
+    lenis = new window.Lenis({
+      duration: 1.15,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      smoothTouch: false,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.2
+    });
+
+    if (hasGSAP) {
+      lenis.on('scroll', () => window.ScrollTrigger && window.ScrollTrigger.update());
+      window.gsap.ticker.add(time => lenis.raf(time * 1000));
+      window.gsap.ticker.lagSmoothing(0);
+      if (window.ScrollTrigger) {
+        window.gsap.registerPlugin(window.ScrollTrigger);
+      }
+    } else {
+      const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+    document.documentElement.classList.add('lenis');
+  }
+
+  // Generic reveal observer — toggles .is-in on .reveal/.reveal-left/.reveal-right
+  // elements. Used by any section; phases 2-7 add art-tier refinements on top.
+  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow');
+  if (prefersReducedMotion) {
+    revealables.forEach(el => el.classList.add('is-in'));
+  } else if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    revealables.forEach(el => io.observe(el));
+  }
+
+  // Hero headline word-split reveal — runs after fonts are ready to avoid FOUT jitter.
+  const headline = document.querySelector('[data-split]');
+  if (headline) {
+    const run = () => {
+      const text = headline.dataset.text || headline.textContent.trim();
+      headline.innerHTML = text.split(/(\s+)/).map((chunk, i) => {
+        if (/^\s+$/.test(chunk)) return chunk;
+        return `<span class="split-word"><span style="--i:${i}">${chunk}</span></span>`;
+      }).join('');
+      requestAnimationFrame(() => headline.classList.add('split-ready'));
+    };
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(run);
+    } else {
+      run();
+    }
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootMotion);
+} else {
+  bootMotion();
 }
 
 /* ----------------------------------------------------------------
@@ -54,16 +134,17 @@ mainNav.querySelectorAll('a').forEach(link => {
 });
 
 /* ----------------------------------------------------------------
-   FADE-IN ON SCROLL (IntersectionObserver)
-   Respects prefers-reduced-motion — if the user prefers no motion,
-   we mark elements visible immediately without stagger.
+   LEGACY FADE-IN ON SCROLL — preserved for sections not yet migrated
+   to .reveal. Uses the shared prefersReducedMotion flag from the
+   motion boot.
 ---------------------------------------------------------------- */
-const fadeEls = document.querySelectorAll('.fade-in');
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (prefersReducedMotion) {
-  fadeEls.forEach(el => el.classList.add('visible'));
-} else {
+(function bootLegacyFade() {
+  const fadeEls = document.querySelectorAll('.fade-in');
+  if (!fadeEls.length) return;
+  if (prefersReducedMotion) {
+    fadeEls.forEach(el => el.classList.add('visible'));
+    return;
+  }
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -74,12 +155,9 @@ if (prefersReducedMotion) {
         observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   fadeEls.forEach(el => observer.observe(el));
-}
+})();
 
 /* ----------------------------------------------------------------
    BOOKING WIDGET: set min dates

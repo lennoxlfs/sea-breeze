@@ -1,47 +1,120 @@
 /* ================================================================
    SEA BREEZE BEACH HOUSE — BARBADOS
-   Brand Redesign Stylesheet
+   Art-Tier Design System (phase 1: tokens)
+   Liquid-glass modernity + subtle vintage nautical flare.
    ================================================================ */
 
-/* ----------------------------------------------------------------
-   CSS CUSTOM PROPERTIES
----------------------------------------------------------------- */
 :root {
-  /* Brand Colors */
-  --deep-teal:     #00394D;
-  --mid-teal:      #1D4B5B;
-  --teal-accent:   #59a3aa;
-  --teal-light:    #91c3c7;
-  --gold:          #c1925f;
-  --gold-light:    #d4a96f;
-  --cream:         #f6f3ef;
-  --cream-dark:    #ede5dd;
-  --sand:          #e5ded6;
+  /* === PALETTE (locked per art-tier brief) === */
+  --ink:           #0A3D62;
+  --ink-deep:      #072a44;
+  --ink-veil:      #04192b;
+  --seafoam:       #4ECDC4;
+  --seafoam-soft:  #a5e5e0;
+  --seafoam-deep:  #2ea89f;
+  --coral:         #E46B60;
+  --coral-soft:    #f09a91;
+  --coral-deep:    #c84c42;
+  --gold-sand:     #D48A40;
+  --gold-sand-soft:#e5b882;
+  --cream:         #F5EDE1;
+  --cream-deep:    #ebe0cc;
+  --paper:         #fbf7f0;
 
-  /* Text */
-  --text-dark:     #0f2830;
-  --text-body:     #2a3d44;
-  --text-muted:    #607880;
-  --text-light:    rgba(255,255,255,0.88);
-  --text-white:    #ffffff;
+  /* Alpha utilities — for glass, borders, veils */
+  --ink-05:        rgba(10, 61, 98, 0.05);
+  --ink-08:        rgba(10, 61, 98, 0.08);
+  --ink-12:        rgba(10, 61, 98, 0.12);
+  --ink-20:        rgba(10, 61, 98, 0.20);
+  --ink-40:        rgba(10, 61, 98, 0.40);
+  --ink-60:        rgba(10, 61, 98, 0.60);
+  --ink-80:        rgba(10, 61, 98, 0.80);
 
-  /* Backgrounds */
-  --bg-white:      #ffffff;
-  --bg-cream:      #f6f3ef;
-  --bg-dark:       #00394D;
+  /* === TEXT === */
+  --text-display: #06233a;
+  --text-dark:    #0f2830;
+  --text-body:    #2a3d44;
+  --text-muted:   #5b7481;
+  --text-light:   rgba(255, 255, 255, 0.92);
+  --text-white:   #ffffff;
 
-  /* Typography */
-  --font-display:  'Cormorant Garamond', Georgia, serif;
-  --font-body:     'Urbanist', system-ui, sans-serif;
+  /* === BACKGROUNDS === */
+  --bg-white: #ffffff;
+  --bg-paper: var(--paper);
+  --bg-cream: var(--cream);
+  --bg-dark:  var(--ink);
 
-  /* Spacing */
-  --section-py:    clamp(80px, 10vw, 140px);
+  /* === TYPE === */
+  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+  --display-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 0;
+
+  /* Type ramp — fluid, editorial */
+  --fs-hero:    clamp(4rem, 9vw, 8.5rem);
+  --fs-h1:      clamp(3rem, 6vw, 5rem);
+  --fs-h2:      clamp(2.2rem, 4.2vw, 3.4rem);
+  --fs-h3:      clamp(1.6rem, 2.4vw, 2.1rem);
+  --fs-h4:      clamp(1.2rem, 1.6vw, 1.4rem);
+  --fs-lead:    clamp(1.1rem, 1.4vw, 1.25rem);
+  --fs-body:    clamp(0.98rem, 1.1vw, 1.05rem);
+  --fs-small:   0.9rem;
+  --fs-eyebrow: 0.72rem;
+
+  /* === SPACING === */
+  --section-py:    clamp(96px, 12vw, 180px);
   --container-px:  clamp(24px, 5vw, 80px);
-  --container-max: 1280px;
+  --container-max: 1320px;
+  --rhythm:        clamp(40px, 5vw, 72px);
 
-  /* Transitions */
+  /* === RADIUS === */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* === SHADOW (ink-tinted, not black) === */
+  --shadow-xs: 0 1px 2px rgba(10, 61, 98, 0.06);
+  --shadow-sm: 0 2px 8px rgba(10, 61, 98, 0.08), 0 1px 2px rgba(10, 61, 98, 0.04);
+  --shadow-md: 0 16px 32px -12px rgba(10, 61, 98, 0.18), 0 2px 6px rgba(10, 61, 98, 0.06);
+  --shadow-lg: 0 36px 60px -20px rgba(10, 61, 98, 0.28), 0 12px 24px -12px rgba(10, 61, 98, 0.12);
+  --shadow-ink:0 30px 70px -20px rgba(4, 25, 43, 0.45);
+
+  /* === GLASS (liquid-glass system) === */
+  --glass-bg:        rgba(255, 255, 255, 0.55);
+  --glass-bg-soft:   rgba(255, 255, 255, 0.38);
+  --glass-bg-ink:    rgba(10, 61, 98, 0.32);
+  --glass-border:    rgba(255, 255, 255, 0.55);
+  --glass-border-ink:rgba(255, 255, 255, 0.14);
+  --glass-blur:      saturate(170%) blur(18px);
+  --glass-blur-sm:   saturate(150%) blur(10px);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.65),
+                     inset 0 -1px 0 rgba(10, 61, 98, 0.08);
+  --glass-highlight-ink: inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                         inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+
+  /* === MOTION === */
   --ease-out:      cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-nautical: cubic-bezier(0.4, 0, 0.15, 1);
+
+  --dur-quick:   160ms;
+  --dur-default: 320ms;
+  --dur-slow:    600ms;
+  --dur-cinema:  900ms;
+
+  /* === LEGACY ALIASES (tokens being migrated; removed in phase 7) === */
+  --deep-teal:   var(--ink);
+  --mid-teal:    var(--ink-deep);
+  --teal-accent: var(--seafoam-deep);
+  --teal-light:  var(--seafoam-soft);
+  --gold:        var(--gold-sand);
+  --gold-light:  var(--gold-sand-soft);
+  --cream-dark:  var(--cream-deep);
+  --sand:        var(--cream-deep);
 }
 
 /* ----------------------------------------------------------------
@@ -50,10 +123,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior handed off to Lenis; native smooth only when Lenis is absent / reduced-motion */
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
+html.lenis, html.lenis body { height: auto; }
+html.lenis.lenis-smooth { scroll-behavior: auto !important; }
+html.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+html.lenis.lenis-stopped body { overflow: hidden; }
 
 body {
   font-family: var(--font-body);
@@ -66,45 +146,73 @@ body {
 
 img, video { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 2px solid var(--teal-accent);
-  outline-offset: 2px;
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+summary:focus-visible, [role="button"]:focus-visible {
+  outline: 2px solid var(--seafoam);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 button, input, select { font-family: inherit; }
 ul { list-style: none; }
+::selection { background: var(--seafoam-soft); color: var(--ink-deep); }
 
 /* ----------------------------------------------------------------
-   TYPOGRAPHY SCALE
+   TYPOGRAPHY
 ---------------------------------------------------------------- */
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--text-dark);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--text-display);
+  font-variation-settings: var(--display-settings);
 }
 
-h1 { font-size: clamp(3.5rem, 7vw, 7rem); font-weight: 300; }
-h2 { font-size: clamp(2.4rem, 4vw, 4rem); }
-h3 { font-size: clamp(1.8rem, 2.5vw, 2.4rem); }
-h4 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
-h5 { font-size: 0.8rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+h1 { font-size: var(--fs-hero); font-weight: 300; letter-spacing: -0.035em; line-height: 0.98; }
+h2 { font-size: var(--fs-h2); letter-spacing: -0.028em; line-height: 1.04; }
+h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; }
+h4 { font-size: var(--fs-h4); letter-spacing: -0.01em; }
+h5 { font-size: 0.8rem; font-family: var(--font-body); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
 
-p { font-size: clamp(0.95rem, 1.1vw, 1.05rem); line-height: 1.75; color: var(--text-body); }
+p { font-size: var(--fs-body); line-height: 1.72; color: var(--text-body); }
+em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
 
-em { font-style: italic; }
+/* Editorial drop-cap (used in phase 3 intro) */
+.dropcap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 4.8em;
+  float: left;
+  line-height: 0.85;
+  margin: 0.06em 0.14em 0 -0.03em;
+  color: var(--coral);
+}
 
-.section-label {
-  display: block;
+/* Eyebrow / section label — also used as vintage-cartographer caption */
+.section-label,
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: var(--fs-eyebrow);
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--teal-accent);
-  margin-bottom: 16px;
+  color: var(--seafoam-deep);
+  margin-bottom: 18px;
 }
-.section-label.light { color: rgba(255,255,255,0.6); }
+.section-label::before,
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.section-label.light,
+.eyebrow.light { color: var(--seafoam-soft); }
 
 .section-header {
   text-align: center;
@@ -113,8 +221,9 @@ em { font-style: italic; }
 }
 .section-header p {
   margin-top: 16px;
-  font-size: 1.05rem;
+  font-size: var(--fs-lead);
   color: var(--text-muted);
+  line-height: 1.6;
 }
 
 /* ----------------------------------------------------------------
@@ -125,6 +234,166 @@ em { font-style: italic; }
   max-width: calc(var(--container-max) + var(--container-px) * 2);
   margin: 0 auto;
   padding: 0 var(--container-px);
+}
+
+/* ----------------------------------------------------------------
+   FOUNDATION — liquid-glass primitives
+---------------------------------------------------------------- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md), var(--glass-highlight);
+  border-radius: var(--r-lg);
+}
+.glass-soft {
+  background: var(--glass-bg-soft);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-sm), var(--glass-highlight);
+  border-radius: var(--r-md);
+}
+.glass-ink {
+  background: var(--glass-bg-ink);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-ink);
+  box-shadow: var(--shadow-ink), var(--glass-highlight-ink);
+  border-radius: var(--r-lg);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .glass        { background: rgba(255, 255, 255, 0.88); }
+  .glass-soft   { background: rgba(255, 255, 255, 0.78); }
+  .glass-ink    { background: rgba(10, 61, 98, 0.88); }
+}
+
+/* ----------------------------------------------------------------
+   FOUNDATION — subtle vintage-nautical micro-details
+---------------------------------------------------------------- */
+
+/* Dashed underline beneath a heading — looks like a cartographer's
+   latitude mark. Used sparingly on section labels / headlines. */
+.chart-rule {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 14px;
+}
+.chart-rule::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 20%;
+  bottom: 0;
+  height: 6px;
+  background-image:
+    linear-gradient(to right, var(--seafoam-deep) 62%, transparent 0);
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+  opacity: 0.75;
+}
+
+/* Nautical hairline divider with a tiny diamond marker, like an
+   old map rhumb line. Used between sections. */
+.chart-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: clamp(32px, 5vw, 64px) auto;
+  max-width: 520px;
+  color: var(--ink-20);
+}
+.chart-divider::before,
+.chart-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background:
+    linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent);
+}
+.chart-divider span {
+  width: 6px; height: 6px;
+  transform: rotate(45deg);
+  background: var(--seafoam-deep);
+  opacity: 0.8;
+}
+
+/* Scroll-drawable SVG line (set pathLength=1; fill via GSAP) */
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--dur-cinema) var(--ease-nautical);
+}
+.in-view .draw-line { stroke-dashoffset: 0; }
+
+/* Glass pill (trust-strip rating pills, etc.) */
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-sm);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-xs), var(--glass-highlight);
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--ink-deep);
+  transition: transform var(--dur-default) var(--ease-out),
+              box-shadow var(--dur-default) var(--ease-out);
+}
+.glass-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm), var(--glass-highlight);
+}
+
+/* Editorial "chapter number" — oversized serif numeral used on
+   dining / spa / weddings sections. */
+.chapter-numeral {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  line-height: 1;
+  color: var(--seafoam-deep);
+  opacity: 0.75;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+}
+
+/* Reveal primitives used by ScrollTrigger. JS adds .is-in. Each is
+   gpu-cheap: opacity + transform only. */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity var(--dur-slow) var(--ease-nautical), transform var(--dur-slow) var(--ease-nautical); }
+.reveal.is-in { opacity: 1; transform: translateY(0); }
+.reveal-slow { transition-duration: var(--dur-cinema); }
+.reveal-left  { transform: translateX(-36px); }
+.reveal-left.is-in { transform: translateX(0); }
+.reveal-right { transform: translateX(36px); }
+.reveal-right.is-in { transform: translateX(0); }
+
+/* Word-split stagger (phase 2 hero headline). Each .word has its
+   own delay set inline by JS (--i), so we don't need per-word CSS. */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.split-word > span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform var(--dur-cinema) var(--ease-nautical);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.split-ready .split-word > span { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-slow, .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
+  .split-word > span { transform: none; transition: none; }
 }
 
 /* ----------------------------------------------------------------
