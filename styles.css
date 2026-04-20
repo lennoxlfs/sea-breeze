@@ -841,38 +841,27 @@ em { font-style: italic; }
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
-/* Bottom fade — "white sand blending from both sides".
-   Two large radial gradients anchored below the bottom-left and
-   bottom-right corners rise into the frame like sand dunes on
-   either edge of a beach, meeting in a soft cove at the center.
-   A gentle linear baseline guarantees the foot stays full cream.
-   Starts partial so GSAP scroll-scrub can firm it up on scroll. */
+/* Bottom fade — even vertical cross-fade from hero video into the
+   cream trust strip. Equal feathering at the top and bottom of the
+   gradient so the two sections meet in a symmetric, diffused band
+   rather than a hard horizon line. */
 .hero-fade {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 42vh;
+  height: 40vh;
   pointer-events: none;
-  opacity: 0.9;
-  background:
-    radial-gradient(ellipse 75% 120% at -5% 118%,
-      var(--cream) 0%,
-      rgba(246, 243, 239, 0.88) 18%,
-      rgba(246, 243, 239, 0.55) 38%,
-      rgba(246, 243, 239, 0.22) 58%,
-      rgba(246, 243, 239, 0) 72%),
-    radial-gradient(ellipse 75% 120% at 105% 118%,
-      var(--cream) 0%,
-      rgba(246, 243, 239, 0.88) 18%,
-      rgba(246, 243, 239, 0.55) 38%,
-      rgba(246, 243, 239, 0.22) 58%,
-      rgba(246, 243, 239, 0) 72%),
-    linear-gradient(to bottom,
-      rgba(246, 243, 239, 0) 0%,
-      rgba(246, 243, 239, 0) 55%,
-      rgba(246, 243, 239, 0.35) 82%,
-      var(--cream) 100%);
+  opacity: 0.95;
+  background: linear-gradient(
+    to bottom,
+    rgba(246, 243, 239, 0)    0%,
+    rgba(246, 243, 239, 0.18) 22%,
+    rgba(246, 243, 239, 0.42) 42%,
+    rgba(246, 243, 239, 0.68) 60%,
+    rgba(246, 243, 239, 0.88) 78%,
+    var(--cream)              96%
+  );
 }
 
 /* ----------------------------------------------------------------
@@ -984,7 +973,7 @@ em { font-style: italic; }
   .trust-pill { padding: 8px 16px 8px 12px; gap: 10px; }
   .trust-rating { font-size: 1.1rem; }
   .trust-count { font-size: 0.6rem; }
-  .hero-fade { height: 34vh; }
+  .hero-fade { height: 32vh; }
 }
 
 /* ----------------------------------------------------------------
