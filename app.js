@@ -139,6 +139,60 @@ function bootMotion() {
         });
       }
     }
+
+    // Parallax on section background images — subtle drift as the section
+    // passes through the viewport. Opt-in via data-parallax. Targets an
+    // inner .spa-img / img element if present, else the element itself.
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+      const target = el.querySelector('.spa-img, img') || el;
+      window.gsap.fromTo(target,
+        { yPercent: -8 },
+        {
+          yPercent: 8,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end:   'bottom top',
+            scrub: 0.8
+          }
+        }
+      );
+    });
+  }
+
+  // Counter animation — numbers tick up from 0 to data-count value once the
+  // parent stat is revealed. Reduced-motion users see the final value immediately.
+  const counters = document.querySelectorAll('[data-count]');
+  if (counters.length) {
+    const runCounter = (el) => {
+      const target = parseInt(el.dataset.count, 10);
+      if (!Number.isFinite(target)) return;
+      if (prefersReducedMotion) { el.textContent = target; return; }
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - start) / duration);
+        // easeOutCubic — settles without overshoot
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if ('IntersectionObserver' in window) {
+      const counterIO = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            runCounter(e.target);
+            counterIO.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      counters.forEach(el => counterIO.observe(el));
+    } else {
+      counters.forEach(runCounter);
+    }
   }
 }
 

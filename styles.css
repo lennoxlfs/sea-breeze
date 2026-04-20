@@ -355,14 +355,39 @@ em { font-style: italic; }
 }
 
 /* Reveal primitives used by ScrollTrigger. JS adds .is-in. Each is
-   gpu-cheap: opacity + transform only. */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity var(--dur-slow) var(--ease-nautical), transform var(--dur-slow) var(--ease-nautical); }
+   gpu-cheap: opacity + transform only. Per-element stagger comes from
+   inline `style="--i:N"` — transition-delay scales with N. */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity var(--dur-slow) var(--ease-nautical), transform var(--dur-slow) var(--ease-nautical); transition-delay: calc(var(--i, 0) * 80ms); }
 .reveal.is-in { opacity: 1; transform: translateY(0); }
 .reveal-slow { transition-duration: var(--dur-cinema); }
 .reveal-left  { transform: translateX(-36px); }
 .reveal-left.is-in { transform: translateX(0); }
 .reveal-right { transform: translateX(36px); }
 .reveal-right.is-in { transform: translateX(0); }
+
+/* Clip-path reveal for gallery images — unveils from below like a curtain */
+.reveal-clip {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1100ms var(--ease-nautical);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.reveal-clip.is-in { clip-path: inset(0 0 0% 0); }
+.reveal-clip > img {
+  transform: scale(1.12);
+  transition: transform 1800ms var(--ease-nautical);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.reveal-clip.is-in > img { transform: scale(1); }
+
+/* Counter module — JS animates textContent from 0 to data-target */
+.stat-num[data-count] {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-clip { clip-path: none; transition: none; }
+  .reveal-clip > img { transform: none; transition: none; }
+}
 
 /* Word-split stagger (phase 2 hero headline). Each .word has its
    own delay set inline by JS (--i), so we don't need per-word CSS. */
@@ -1606,66 +1631,288 @@ em { font-style: italic; }
 .why-item p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; }
 
 /* ----------------------------------------------------------------
-   BARBADOS
+   BARBADOS — Vintage cartographer map + modern minimal glass card.
+   Cream paper background (matches trust strip) for seamless flow.
 ---------------------------------------------------------------- */
 .barbados {
   position: relative;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
+  padding: var(--section-py) 0;
+  background: var(--cream);
   overflow: hidden;
 }
-
-.barbados-visual {
+.barbados::before {
+  /* subtle compass-rose watermark in the corner */
+  content: "";
   position: absolute;
-  inset: 0;
+  top: -80px; right: -120px;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(0,57,77,0.05), transparent 60%);
+  pointer-events: none;
 }
-.barbados-img {
+
+.barbados-header {
+  max-width: 640px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.barbados-header h2 {
+  color: var(--deep-teal);
+  margin-bottom: 18px;
+}
+.barbados-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.barbados-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 56px;
+  align-items: center;
+}
+
+/* ---- Map ---- */
+.barbados-map {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 520 / 640;
+  border-radius: 2px;
+  overflow: hidden;
+  background: #f5ede1;
+  /* vintage paper shadow — warm, layered, not flat */
+  box-shadow:
+    0 1px 2px rgba(60, 38, 18, 0.12),
+    0 12px 30px -12px rgba(60, 38, 18, 0.25),
+    0 40px 80px -30px rgba(0, 57, 77, 0.28),
+    inset 0 0 60px rgba(193, 146, 95, 0.1);
+}
+.barbados-map::after {
+  /* soft vignette at edges to suggest aged paper */
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(80, 50, 20, 0.12) 100%);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.map-svg {
+  display: block;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
-}
-.barbados-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    rgba(0, 20, 35, 0.88) 0%,
-    rgba(0, 57, 77, 0.65) 50%,
-    rgba(0, 20, 35, 0.25) 100%
-  );
 }
 
-.barbados-content {
+/* Island stroke-draw animation — JS flips .is-in when scrolled in */
+.map-island {
+  stroke-dasharray: 2400;
+  stroke-dashoffset: 2400;
+  transition: stroke-dashoffset 2200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.is-in .map-island {
+  stroke-dashoffset: 0;
+}
+.map-island-echo {
+  opacity: 0;
+  transition: opacity 1400ms ease 1100ms;
+}
+.reveal-left.is-in .map-island-echo {
+  opacity: 1;
+}
+
+/* Graticule + places fade in softly after the island draws */
+.map-graticule,
+.map-graticule-labels,
+.map-places,
+.map-sea,
+.map-rhumbs,
+.map-scale,
+.map-cartouche,
+.map-compass {
+  opacity: 0;
+  transition: opacity 900ms ease 1400ms;
+}
+.reveal-left.is-in .map-graticule,
+.reveal-left.is-in .map-graticule-labels,
+.reveal-left.is-in .map-places,
+.reveal-left.is-in .map-sea,
+.reveal-left.is-in .map-rhumbs,
+.reveal-left.is-in .map-scale,
+.reveal-left.is-in .map-cartouche,
+.reveal-left.is-in .map-compass {
+  opacity: 1;
+}
+
+/* Pin — only fully visible after the map has drawn, then pulses */
+.map-pin {
+  opacity: 0;
+  transition: opacity 600ms ease 1900ms;
+}
+.reveal-left.is-in .map-pin {
+  opacity: 1;
+}
+.pin-pulse {
+  transform-origin: 0 0;
+  animation: pin-ping 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.pin-pulse-2 {
+  animation-delay: 1.3s;
+}
+@keyframes pin-ping {
+  0%   { transform: scale(0.4); opacity: 0.9; }
+  70%  { transform: scale(1.6); opacity: 0;   }
+  100% { transform: scale(1.6); opacity: 0;   }
+}
+
+/* ---- Info card (glass on cream) ---- */
+.barbados-card {
   position: relative;
-  z-index: 1;
-  padding: var(--section-py) 0;
-  max-width: 620px;
+  padding: 44px 40px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border: 1px solid rgba(0, 57, 77, 0.12);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 2px rgba(0, 57, 77, 0.06),
+    0 24px 60px -24px rgba(0, 57, 77, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
-.barbados-content h2 { color: var(--text-white); margin-bottom: 20px; }
-.barbados-content > p { color: rgba(255,255,255,0.7); margin-bottom: 40px; }
+@supports not (backdrop-filter: blur(1px)) {
+  .barbados-card { background: #ffffff; }
+}
 
-.barbados-facts {
+.card-flourish {
+  color: var(--gold);
+  width: 80px;
+  margin-bottom: 20px;
+  opacity: 0.75;
+}
+.card-flourish svg { display: block; width: 100%; height: auto; }
+
+.card-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--teal-accent);
+  margin-bottom: 14px;
+}
+.barbados-card h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--deep-teal);
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+}
+.barbados-card h3 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--teal-accent);
+}
+
+/* Coordinates — vintage serif, two columns */
+.card-coords {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0 0 28px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(0, 57, 77, 0.12);
+  border-bottom: 1px solid rgba(0, 57, 77, 0.12);
+}
+.card-coords dt {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.card-coords dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--deep-teal);
+  letter-spacing: 0.02em;
+}
+
+/* Facts strip */
+.card-facts {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.fact {
+.card-facts li {
   display: flex;
-  gap: 16px;
   align-items: baseline;
+  gap: 18px;
 }
-.fact strong {
+.fact-num {
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--deep-teal);
+  letter-spacing: -0.02em;
+  min-width: 52px;
+}
+.fact-num em {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--teal-accent);
+}
+.fact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-white);
-  white-space: nowrap;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
-.fact span {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.55);
+.fact-detail strong {
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--deep-teal);
+}
+
+/* Directions button — gold pill, hairline + icon */
+.btn-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: var(--deep-teal);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+.btn-directions:hover {
+  background: var(--mid-teal);
+  transform: translateY(-1px);
+}
+.btn-directions svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
 }
 
 /* ----------------------------------------------------------------
@@ -1881,13 +2128,19 @@ em { font-style: italic; }
   .footer-grid { grid-template-columns: 1fr; gap: 40px; }
   .footer-bottom { flex-direction: column; text-align: center; }
   .footer-legal { flex-wrap: wrap; justify-content: center; }
-  .barbados-overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(0, 30, 45, 0.75) 0%,
-      rgba(0, 57, 77, 0.65) 100%
-    );
+  .barbados-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
+  .barbados-map {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .barbados-card {
+    padding: 36px 28px;
+  }
+  .card-facts li { gap: 14px; }
+  .fact-num { font-size: 1.7rem; min-width: 44px; }
 }
 
 @media (max-width: 480px) {
