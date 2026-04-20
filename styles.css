@@ -1628,22 +1628,49 @@ em { font-style: italic; }
 .barbados {
   position: relative;
   padding: var(--section-py) 0;
-  background: linear-gradient(to bottom, var(--cream) 0%, var(--cream) 78%, var(--bg-white) 100%);
+  background: #f2e6cd;
   overflow: hidden;
+  isolation: isolate;
 }
+/* blend into neighboring sections — top cream → bottom white — via gradient overlays */
 .barbados::before {
-  /* subtle compass-rose watermark in the corner */
   content: "";
   position: absolute;
-  top: -80px; right: -120px;
-  width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(0,57,77,0.05), transparent 60%);
+  inset: 0;
+  background:
+    linear-gradient(to bottom, var(--cream) 0%, rgba(242,230,205,0) 16%, rgba(242,230,205,0) 82%, var(--bg-white) 100%);
   pointer-events: none;
+  z-index: 2;
+}
+
+/* Full-section cartography canvas — the whole background IS the old map */
+.barbados-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1600ms ease;
+}
+.barbados-canvas.is-in,
+.reveal.is-in ~ .barbados-canvas,
+.barbados.is-in .barbados-canvas {
+  opacity: 1;
+}
+.barbados-canvas svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.barbados .container {
+  position: relative;
+  z-index: 3;
 }
 
 .barbados-header {
-  max-width: 640px;
-  margin: 0 auto 64px;
+  max-width: 680px;
+  margin: 0 auto 72px;
   text-align: center;
 }
 .barbados-header h2 {
@@ -1658,38 +1685,25 @@ em { font-style: italic; }
 
 .barbados-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 64px;
   align-items: center;
 }
 
-/* ---- Map ---- */
-.barbados-map {
+/* ---- Island silhouette (no frame — floats on paper) ---- */
+.barbados-island {
   position: relative;
   margin: 0;
-  aspect-ratio: 520 / 640;
-  border-radius: 2px;
-  overflow: hidden;
-  background: #f5ede1;
-  /* vintage paper shadow — warm, layered, not flat */
-  box-shadow:
-    0 1px 2px rgba(60, 38, 18, 0.12),
-    0 12px 30px -12px rgba(60, 38, 18, 0.25),
-    0 40px 80px -30px rgba(0, 57, 77, 0.28),
-    inset 0 0 60px rgba(193, 146, 95, 0.1);
+  aspect-ratio: 420 / 600;
+  max-width: 520px;
+  /* subtle ground shadow so the island feels slightly lifted off the paper */
+  filter: drop-shadow(0 18px 28px rgba(60, 38, 18, 0.18));
 }
-.barbados-map::after {
-  /* soft vignette at edges to suggest aged paper */
-  content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 55%, rgba(80, 50, 20, 0.12) 100%);
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
-.map-svg {
+.island-svg {
   display: block;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 /* Island stroke-draw animation — JS flips .is-in when scrolled in */
@@ -1709,30 +1723,18 @@ em { font-style: italic; }
   opacity: 1;
 }
 
-/* Graticule + places fade in softly after the island draws */
-.map-graticule,
-.map-graticule-labels,
-.map-places,
-.map-sea,
-.map-rhumbs,
-.map-scale,
-.map-cartouche,
-.map-compass {
+/* Island interior flourishes fade in after coastline draws */
+.map-hachure,
+.map-places {
   opacity: 0;
   transition: opacity 900ms ease 1400ms;
 }
-.reveal-left.is-in .map-graticule,
-.reveal-left.is-in .map-graticule-labels,
-.reveal-left.is-in .map-places,
-.reveal-left.is-in .map-sea,
-.reveal-left.is-in .map-rhumbs,
-.reveal-left.is-in .map-scale,
-.reveal-left.is-in .map-cartouche,
-.reveal-left.is-in .map-compass {
+.reveal-left.is-in .map-hachure,
+.reveal-left.is-in .map-places {
   opacity: 1;
 }
 
-/* Pin — only fully visible after the map has drawn, then pulses */
+/* Pin — only fully visible after the coastline has drawn, then pulses */
 .map-pin {
   opacity: 0;
   transition: opacity 600ms ease 1900ms;
@@ -1740,6 +1742,35 @@ em { font-style: italic; }
 .reveal-left.is-in .map-pin {
   opacity: 1;
 }
+
+/* Ambient background cartography — fade in with the section */
+.barbados-canvas .map-graticule,
+.barbados-canvas .map-graticule-labels,
+.barbados-canvas .map-rhumbs,
+.barbados-canvas .map-sea,
+.barbados-canvas .map-cartouche,
+.barbados-canvas .map-compass,
+.barbados-canvas .map-oceans,
+.barbados-canvas .map-scale {
+  opacity: 0;
+  transition: opacity 1400ms ease;
+}
+.barbados.is-in .barbados-canvas .map-graticule,
+.barbados.is-in .barbados-canvas .map-graticule-labels,
+.barbados.is-in .barbados-canvas .map-rhumbs,
+.barbados.is-in .barbados-canvas .map-sea,
+.barbados.is-in .barbados-canvas .map-cartouche,
+.barbados.is-in .barbados-canvas .map-compass,
+.barbados.is-in .barbados-canvas .map-oceans,
+.barbados.is-in .barbados-canvas .map-scale {
+  opacity: 1;
+}
+.barbados.is-in .barbados-canvas .map-rhumbs { transition-delay: 400ms; }
+.barbados.is-in .barbados-canvas .map-sea { transition-delay: 600ms; }
+.barbados.is-in .barbados-canvas .map-compass { transition-delay: 800ms; }
+.barbados.is-in .barbados-canvas .map-cartouche { transition-delay: 1000ms; }
+.barbados.is-in .barbados-canvas .map-oceans { transition-delay: 1200ms; }
+.barbados.is-in .barbados-canvas .map-scale { transition-delay: 1400ms; }
 .pin-pulse {
   transform-origin: 0 0;
   animation: pin-ping 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
@@ -2123,8 +2154,8 @@ em { font-style: italic; }
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  .barbados-map {
-    max-width: 420px;
+  .barbados-island {
+    max-width: 360px;
     margin: 0 auto;
   }
   .barbados-card {

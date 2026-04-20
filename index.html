@@ -1046,6 +1046,133 @@
        Directions CTA.
   ============================================================ -->
   <section class="barbados" id="barbados">
+
+    <!-- Full-section ambient cartography: paper, grain, graticule, rhumbs, compass, cartouche -->
+    <div class="barbados-canvas" aria-hidden="true">
+      <svg viewBox="0 0 1600 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="barbados-grain" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0.36  0 0 0 0 0.22  0 0 0 0 0.08  0 0 0 0.09 0" />
+          </filter>
+          <radialGradient id="paper-flare-1" cx="18%" cy="22%" r="55%">
+            <stop offset="0%" stop-color="#fbf3e4" stop-opacity="1" />
+            <stop offset="100%" stop-color="#fbf3e4" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="paper-flare-2" cx="82%" cy="78%" r="60%">
+            <stop offset="0%" stop-color="#f0e2c6" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#f0e2c6" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="paper-flare-3" cx="70%" cy="15%" r="40%">
+            <stop offset="0%" stop-color="#e8d3a8" stop-opacity="0.55" />
+            <stop offset="100%" stop-color="#e8d3a8" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="paper-vignette" cx="50%" cy="50%" r="70%">
+            <stop offset="55%" stop-color="#000" stop-opacity="0" />
+            <stop offset="100%" stop-color="#3a2510" stop-opacity="0.22" />
+          </radialGradient>
+        </defs>
+
+        <!-- Aged paper wash with flares -->
+        <rect width="1600" height="1100" fill="#f2e6cd" />
+        <rect width="1600" height="1100" fill="url(#paper-flare-1)" />
+        <rect width="1600" height="1100" fill="url(#paper-flare-2)" />
+        <rect width="1600" height="1100" fill="url(#paper-flare-3)" />
+        <rect width="1600" height="1100" filter="url(#barbados-grain)" opacity="0.8" />
+
+        <!-- Large dashed graticule spanning full section -->
+        <g class="map-graticule" stroke="rgba(0,57,77,0.22)" stroke-width="0.8" stroke-dasharray="4 7" fill="none">
+          <line x1="0" y1="180" x2="1600" y2="180" />
+          <line x1="0" y1="420" x2="1600" y2="420" />
+          <line x1="0" y1="660" x2="1600" y2="660" />
+          <line x1="0" y1="900" x2="1600" y2="900" />
+          <line x1="220" y1="0" x2="220" y2="1100" />
+          <line x1="520" y1="0" x2="520" y2="1100" />
+          <line x1="820" y1="0" x2="820" y2="1100" />
+          <line x1="1120" y1="0" x2="1120" y2="1100" />
+          <line x1="1420" y1="0" x2="1420" y2="1100" />
+        </g>
+        <g class="map-graticule-labels" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="13" fill="rgba(0,57,77,0.45)" letter-spacing="0.08em">
+          <text x="26" y="176">13°20'N</text>
+          <text x="26" y="416">13°10'N</text>
+          <text x="26" y="656">13°00'N</text>
+          <text x="26" y="896">12°50'N</text>
+          <text x="220" y="24" text-anchor="middle">59°45'W</text>
+          <text x="520" y="24" text-anchor="middle">59°38'W</text>
+          <text x="820" y="24" text-anchor="middle">59°32'W</text>
+          <text x="1120" y="24" text-anchor="middle">59°25'W</text>
+          <text x="1420" y="24" text-anchor="middle">59°18'W</text>
+        </g>
+
+        <!-- Rhumb lines radiating from the Sea Breeze location (approx island center) -->
+        <g class="map-rhumbs" stroke="rgba(0,57,77,0.11)" stroke-width="0.5" stroke-dasharray="2 6" fill="none">
+          <line x1="820" y1="680" x2="40" y2="40" />
+          <line x1="820" y1="680" x2="40" y2="1080" />
+          <line x1="820" y1="680" x2="1580" y2="40" />
+          <line x1="820" y1="680" x2="1580" y2="1080" />
+          <line x1="820" y1="680" x2="820" y2="0" />
+          <line x1="820" y1="680" x2="820" y2="1100" />
+          <line x1="820" y1="680" x2="0" y2="680" />
+          <line x1="820" y1="680" x2="1600" y2="680" />
+          <line x1="820" y1="680" x2="220" y2="0" />
+          <line x1="820" y1="680" x2="1420" y2="0" />
+          <line x1="820" y1="680" x2="220" y2="1100" />
+          <line x1="820" y1="680" x2="1420" y2="1100" />
+        </g>
+
+        <!-- Faint dotted sea-stipple wave rings -->
+        <g class="map-sea" stroke="rgba(0,57,77,0.14)" fill="none" stroke-dasharray="1 5" stroke-width="0.6">
+          <ellipse cx="820" cy="680" rx="520" ry="360" />
+          <ellipse cx="820" cy="680" rx="680" ry="450" opacity="0.7" />
+          <ellipse cx="820" cy="680" rx="840" ry="540" opacity="0.4" />
+        </g>
+
+        <!-- Cartouche title, top-left -->
+        <g class="map-cartouche" transform="translate(140,160)" fill="#00394D">
+          <text font-family="'Cormorant Garamond', serif" font-style="italic" font-weight="400" font-size="38" letter-spacing="0.22em">BARBADOS</text>
+          <text y="28" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="14" fill="rgba(0,57,77,0.55)" letter-spacing="0.42em">WEST · INDIES · A.D. MMXXVI</text>
+          <line x1="0" y1="48" x2="240" y2="48" stroke="rgba(0,57,77,0.4)" stroke-width="0.7" />
+          <line x1="0" y1="54" x2="160" y2="54" stroke="rgba(0,57,77,0.25)" stroke-width="0.4" />
+        </g>
+
+        <!-- Compass rose, top-right — larger, ambient -->
+        <g class="map-compass" transform="translate(1400,200)">
+          <circle r="62" fill="rgba(251,243,228,0.55)" stroke="rgba(0,57,77,0.35)" stroke-width="0.8" />
+          <circle r="50" fill="none" stroke="rgba(0,57,77,0.22)" stroke-width="0.5" stroke-dasharray="1 4" />
+          <circle r="34" fill="none" stroke="rgba(0,57,77,0.15)" stroke-width="0.4" />
+          <polygon points="0,-56 8,0 0,56 -8,0" fill="#00394D" opacity="0.82" />
+          <polygon points="-56,0 0,-8 56,0 0,8" fill="#00394D" opacity="0.5" />
+          <polygon points="0,-36 4,0 0,36 -4,0" fill="#c1925f" />
+          <circle r="4" fill="#00394D" />
+          <text y="-70" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="16" fill="#00394D" text-anchor="middle" letter-spacing="0.22em">N</text>
+          <text y="80" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="13" fill="rgba(0,57,77,0.6)" text-anchor="middle" letter-spacing="0.22em">S</text>
+          <text x="74" y="5" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="13" fill="rgba(0,57,77,0.6)" text-anchor="middle" letter-spacing="0.22em">E</text>
+          <text x="-74" y="5" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="13" fill="rgba(0,57,77,0.6)" text-anchor="middle" letter-spacing="0.22em">W</text>
+        </g>
+
+        <!-- Ocean labels drifting across the paper -->
+        <g class="map-oceans" font-family="'Cormorant Garamond', serif" font-style="italic" fill="rgba(0,57,77,0.28)">
+          <text x="230" y="780" font-size="42" letter-spacing="0.6em">CARIBBEAN  SEA</text>
+          <text x="1100" y="520" font-size="36" letter-spacing="0.55em">ATLANTIC</text>
+          <text x="1130" y="560" font-size="22" letter-spacing="0.45em">OCEAN</text>
+        </g>
+
+        <!-- Scale bar, bottom-left -->
+        <g class="map-scale" transform="translate(160,960)" fill="rgba(0,57,77,0.7)">
+          <line x1="0" y1="0" x2="200" y2="0" stroke="#00394D" stroke-width="1.2" />
+          <line x1="0" y1="-6" x2="0" y2="6" stroke="#00394D" stroke-width="1.2" />
+          <line x1="100" y1="-4" x2="100" y2="4" stroke="#00394D" stroke-width="0.8" />
+          <line x1="200" y1="-6" x2="200" y2="6" stroke="#00394D" stroke-width="1.2" />
+          <text x="0" y="22" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="12">0</text>
+          <text x="100" y="22" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="12" text-anchor="middle">5 km</text>
+          <text x="200" y="22" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="12" text-anchor="end">10</text>
+        </g>
+
+        <!-- Edge vignette on top -->
+        <rect width="1600" height="1100" fill="url(#paper-vignette)" />
+      </svg>
+    </div>
+
     <div class="container">
       <div class="barbados-header reveal">
         <span class="section-label">The Island</span>
@@ -1055,191 +1182,115 @@
 
       <div class="barbados-grid">
 
-        <!-- LEFT: vintage cartographer map -->
-        <figure class="barbados-map reveal-left" aria-label="Map of Barbados showing Sea Breeze Beach House on Maxwell Coast">
-          <svg viewBox="0 0 520 640" role="img" aria-label="Barbados island map" class="map-svg" xmlns="http://www.w3.org/2000/svg">
-
-            <!-- Paper grain + vintage filters -->
+        <!-- LEFT: island silhouette floating on the paper -->
+        <figure class="barbados-island reveal-left" aria-label="Map of Barbados showing Sea Breeze Beach House on Maxwell Coast">
+          <svg viewBox="0 0 420 600" role="img" aria-label="Barbados island silhouette" class="island-svg" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <filter id="map-grain" x="0" y="0" width="100%" height="100%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0" />
-              </filter>
               <filter id="ink-spread" x="-5%" y="-5%" width="110%" height="110%">
-                <feGaussianBlur stdDeviation="0.35" />
+                <feGaussianBlur stdDeviation="0.45" />
               </filter>
-              <pattern id="grid-dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-                <circle cx="1" cy="1" r="0.8" fill="rgba(0,57,77,0.14)" />
-              </pattern>
+              <linearGradient id="island-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="rgba(145,195,199,0.32)" />
+                <stop offset="100%" stop-color="rgba(0,57,77,0.18)" />
+              </linearGradient>
             </defs>
 
-            <!-- Cream paper with subtle grain -->
-            <rect x="0" y="0" width="520" height="640" fill="#f5ede1" />
-            <rect x="0" y="0" width="520" height="640" fill="url(#grid-dots)" />
-            <rect x="0" y="0" width="520" height="640" filter="url(#map-grain)" opacity="0.7" />
-
-            <!-- Neat-line border (double rule) -->
-            <rect x="18" y="18" width="484" height="604" fill="none" stroke="rgba(0,57,77,0.45)" stroke-width="1.2" />
-            <rect x="24" y="24" width="472" height="592" fill="none" stroke="rgba(0,57,77,0.22)" stroke-width="0.6" />
-
-            <!-- Cartouche title -->
-            <g transform="translate(260,62)" text-anchor="middle">
-              <text class="map-cartouche" font-family="'Cormorant Garamond', serif" font-style="italic" font-weight="400" font-size="20" fill="#00394D" letter-spacing="0.18em">BARBADOS</text>
-              <text y="22" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="10" fill="rgba(0,57,77,0.55)" letter-spacing="0.34em">WEST INDIES · A.D. MMXXVI</text>
-              <line x1="-70" y1="32" x2="70" y2="32" stroke="rgba(0,57,77,0.4)" stroke-width="0.6" />
-              <line x1="-40" y1="36" x2="40" y2="36" stroke="rgba(0,57,77,0.25)" stroke-width="0.4" />
-            </g>
-
-            <!-- Dashed lat / long rules -->
-            <g class="map-graticule" stroke="rgba(0,57,77,0.35)" stroke-width="0.7" stroke-dasharray="3 4" fill="none">
-              <line x1="40" y1="205" x2="480" y2="205" />
-              <line x1="40" y1="325" x2="480" y2="325" />
-              <line x1="40" y1="445" x2="480" y2="445" />
-              <line x1="160" y1="100" x2="160" y2="570" />
-              <line x1="260" y1="100" x2="260" y2="570" />
-              <line x1="360" y1="100" x2="360" y2="570" />
-            </g>
-            <g class="map-graticule-labels" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="10" fill="rgba(0,57,77,0.6)">
-              <text x="42" y="201">13°15'N</text>
-              <text x="42" y="321">13°05'N</text>
-              <text x="42" y="441">12°55'N</text>
-              <text x="158" y="96" text-anchor="middle">59°40'W</text>
-              <text x="258" y="96" text-anchor="middle">59°35'W</text>
-              <text x="358" y="96" text-anchor="middle">59°30'W</text>
-            </g>
-
-            <!-- Faint sea stipple: dotted wave rings around the island -->
-            <g class="map-sea" stroke="rgba(0,57,77,0.18)" fill="none" stroke-width="0.5" stroke-dasharray="1 4">
-              <path d="M130 180 C 180 140, 360 130, 420 220 C 470 310, 450 480, 340 530 C 220 580, 90 520, 80 380 C 75 280, 95 210, 130 180 Z" />
-              <path d="M105 160 C 170 110, 380 95, 450 205 C 500 305, 480 505, 350 560 C 210 605, 60 540, 55 370 C 48 260, 72 195, 105 160 Z" opacity="0.7" />
-            </g>
-
-            <!-- Subtle compass lines radiating from the pin -->
-            <g class="map-rhumbs" stroke="rgba(0,57,77,0.12)" stroke-width="0.4" stroke-dasharray="2 5">
-              <line x1="290" y1="410" x2="50" y2="140" />
-              <line x1="290" y1="410" x2="50" y2="620" />
-              <line x1="290" y1="410" x2="500" y2="140" />
-              <line x1="290" y1="410" x2="500" y2="620" />
-              <line x1="290" y1="410" x2="290" y2="110" />
-              <line x1="290" y1="410" x2="290" y2="600" />
-              <line x1="290" y1="410" x2="40" y2="410" />
-              <line x1="290" y1="410" x2="500" y2="410" />
-            </g>
-
-            <!-- BARBADOS ISLAND OUTLINE — stroke-draw animated -->
+            <!-- Barbados proper pear/teardrop silhouette: narrow north, wide rounded south -->
             <path
-              id="barbados-outline"
               class="map-island"
-              d="M 236 158
-                 C 244 150, 264 146, 278 150
-                 C 296 154, 308 166, 318 182
-                 C 330 198, 340 216, 354 232
-                 C 368 246, 380 262, 388 282
-                 C 396 302, 402 324, 402 346
-                 C 402 370, 396 392, 386 412
-                 C 378 428, 368 444, 354 458
-                 C 336 478, 312 494, 286 502
-                 C 258 510, 228 512, 204 502
-                 C 180 492, 160 472, 148 446
-                 C 136 418, 132 388, 136 358
-                 C 138 332, 144 306, 154 282
-                 C 164 258, 178 234, 194 212
-                 C 208 194, 222 176, 236 158 Z"
-              fill="rgba(145,195,199,0.18)"
+              d="M 208 42
+                 C 232 48, 252 62, 268 84
+                 C 284 108, 296 136, 306 166
+                 C 316 196, 324 228, 330 260
+                 C 335 290, 338 320, 338 350
+                 C 337 382, 332 412, 322 440
+                 C 312 466, 296 488, 276 504
+                 C 254 520, 228 530, 200 534
+                 C 172 538, 144 534, 118 522
+                 C 92 510, 70 490, 56 464
+                 C 42 436, 34 404, 32 372
+                 C 32 340, 38 308, 48 276
+                 C 60 240, 76 206, 94 174
+                 C 114 140, 136 108, 158 80
+                 C 174 60, 190 46, 208 42 Z"
+              fill="url(#island-fill)"
               stroke="#00394D"
-              stroke-width="1.4"
+              stroke-width="1.8"
               stroke-linejoin="round"
               filter="url(#ink-spread)"
             />
 
-            <!-- Inner coastline echo — hand-drawn double line -->
+            <!-- Double-line coast echo -->
             <path
               class="map-island-echo"
-              d="M 242 168
-                 C 252 162, 268 160, 280 164
-                 C 296 170, 306 182, 316 196
-                 C 328 212, 338 228, 350 244
-                 C 362 258, 372 272, 380 290
-                 C 388 308, 392 328, 392 348
-                 C 390 368, 384 386, 376 402
-                 C 368 418, 356 434, 342 446
-                 C 324 462, 304 476, 282 482
-                 C 258 490, 234 490, 214 482
-                 C 194 472, 178 454, 168 432
-                 C 158 408, 154 382, 158 356
-                 C 160 334, 166 312, 174 290
-                 C 182 268, 194 248, 208 228
-                 C 220 210, 232 192, 242 168 Z"
+              d="M 208 52
+                 C 228 58, 246 72, 260 92
+                 C 276 116, 288 144, 298 172
+                 C 308 200, 316 232, 320 262
+                 C 325 290, 328 318, 328 348
+                 C 326 378, 322 406, 312 432
+                 C 302 456, 288 476, 270 492
+                 C 250 506, 226 516, 200 520
+                 C 174 524, 148 520, 124 510
+                 C 100 498, 80 480, 68 456
+                 C 54 432, 46 402, 44 372
+                 C 44 342, 50 312, 60 282
+                 C 72 248, 86 216, 104 186
+                 C 122 154, 142 124, 162 98
+                 C 176 80, 192 62, 208 52 Z"
               fill="none"
-              stroke="rgba(0,57,77,0.28)"
-              stroke-width="0.6"
+              stroke="rgba(0,57,77,0.32)"
+              stroke-width="0.7"
               stroke-linejoin="round"
             />
 
-            <!-- Interior flourishes: hatched hills + inland place names -->
-            <g class="map-places" font-family="'Cormorant Garamond', serif" font-style="italic">
-              <!-- Bridgetown -->
-              <circle cx="176" cy="358" r="2.4" fill="#00394D" />
-              <text x="184" y="362" font-size="11" fill="#00394D" letter-spacing="0.08em">Bridgetown</text>
-              <!-- Holetown -->
-              <circle cx="166" cy="288" r="1.8" fill="rgba(0,57,77,0.75)" />
-              <text x="172" y="292" font-size="9" fill="rgba(0,57,77,0.75)" letter-spacing="0.08em">Holetown</text>
+            <!-- Tiny hachure marks suggesting inland hills (Scotland District) -->
+            <g class="map-hachure" stroke="rgba(0,57,77,0.3)" stroke-width="0.5" fill="none">
+              <line x1="238" y1="210" x2="242" y2="222" />
+              <line x1="246" y1="208" x2="250" y2="220" />
+              <line x1="254" y1="212" x2="258" y2="224" />
+              <line x1="262" y1="218" x2="266" y2="230" />
+              <line x1="270" y1="226" x2="274" y2="238" />
+              <line x1="252" y1="246" x2="256" y2="258" />
+              <line x1="260" y1="250" x2="264" y2="262" />
+              <line x1="268" y1="256" x2="272" y2="268" />
+            </g>
+
+            <!-- Place names -->
+            <g class="map-places" font-family="'Cormorant Garamond', serif" font-style="italic" fill="#00394D">
+              <!-- North Point -->
+              <circle cx="202" cy="66" r="1.6" fill="rgba(0,57,77,0.7)" />
+              <text x="210" y="70" font-size="10" fill="rgba(0,57,77,0.7)" letter-spacing="0.1em">North Point</text>
               <!-- Speightstown -->
-              <circle cx="190" cy="222" r="1.8" fill="rgba(0,57,77,0.75)" />
-              <text x="196" y="226" font-size="9" fill="rgba(0,57,77,0.75)" letter-spacing="0.08em">Speightstown</text>
+              <circle cx="108" cy="180" r="2" fill="rgba(0,57,77,0.8)" />
+              <text x="42" y="184" font-size="10" fill="rgba(0,57,77,0.8)" letter-spacing="0.1em">Speightstown</text>
+              <!-- Holetown -->
+              <circle cx="86" cy="260" r="2" fill="rgba(0,57,77,0.8)" />
+              <text x="32" y="264" font-size="10" fill="rgba(0,57,77,0.8)" letter-spacing="0.1em">Holetown</text>
               <!-- Bathsheba -->
-              <circle cx="362" cy="262" r="1.8" fill="rgba(0,57,77,0.75)" />
-              <text x="330" y="252" font-size="9" fill="rgba(0,57,77,0.75)" letter-spacing="0.08em">Bathsheba</text>
-              <!-- St. Lawrence Gap -->
-              <circle cx="262" cy="430" r="1.8" fill="rgba(0,57,77,0.75)" />
-              <text x="178" y="444" font-size="9" fill="rgba(0,57,77,0.75)" letter-spacing="0.08em">St. Lawrence Gap</text>
+              <circle cx="312" cy="286" r="2" fill="rgba(0,57,77,0.8)" />
+              <text x="322" y="290" font-size="10" fill="rgba(0,57,77,0.8)" letter-spacing="0.1em">Bathsheba</text>
+              <!-- Bridgetown -->
+              <circle cx="96" cy="370" r="2.6" fill="#00394D" />
+              <text x="26" y="374" font-size="12" fill="#00394D" letter-spacing="0.1em">Bridgetown</text>
               <!-- Oistins -->
-              <circle cx="232" cy="450" r="1.8" fill="rgba(0,57,77,0.75)" />
-              <text x="202" y="462" font-size="9" fill="rgba(0,57,77,0.75)" letter-spacing="0.08em">Oistins</text>
-              <!-- Caribbean Sea label -->
-              <text x="96" y="380" font-size="14" fill="rgba(0,57,77,0.45)" letter-spacing="0.5em">CARIBBEAN</text>
-              <text x="102" y="398" font-size="11" fill="rgba(0,57,77,0.4)" letter-spacing="0.4em">SEA</text>
-              <!-- Atlantic label -->
-              <text x="408" y="320" font-size="13" fill="rgba(0,57,77,0.45)" letter-spacing="0.5em">ATLANTIC</text>
+              <circle cx="168" cy="482" r="1.8" fill="rgba(0,57,77,0.75)" />
+              <text x="90" y="498" font-size="10" fill="rgba(0,57,77,0.75)" letter-spacing="0.1em">Oistins</text>
+              <!-- Ragged Point -->
+              <circle cx="320" cy="370" r="1.6" fill="rgba(0,57,77,0.7)" />
+              <text x="328" y="374" font-size="10" fill="rgba(0,57,77,0.7)" letter-spacing="0.1em">Ragged Pt.</text>
             </g>
 
-            <!-- Scale bar -->
-            <g class="map-scale" transform="translate(62,570)">
-              <line x1="0" y1="0" x2="120" y2="0" stroke="#00394D" stroke-width="1" />
-              <line x1="0" y1="-4" x2="0" y2="4" stroke="#00394D" stroke-width="1" />
-              <line x1="60" y1="-3" x2="60" y2="3" stroke="#00394D" stroke-width="0.7" />
-              <line x1="120" y1="-4" x2="120" y2="4" stroke="#00394D" stroke-width="1" />
-              <text x="0" y="18" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.65)">0</text>
-              <text x="60" y="18" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.65)" text-anchor="middle">5 km</text>
-              <text x="120" y="18" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.65)" text-anchor="end">10</text>
-            </g>
-
-            <!-- Compass rose (top-right) -->
-            <g class="map-compass" transform="translate(438,138)">
-              <circle r="28" fill="rgba(245,237,225,0.6)" stroke="rgba(0,57,77,0.45)" stroke-width="0.7" />
-              <circle r="22" fill="none" stroke="rgba(0,57,77,0.25)" stroke-width="0.4" stroke-dasharray="1 3" />
-              <!-- Four-point star -->
-              <polygon points="0,-24 4,0 0,24 -4,0" fill="#00394D" opacity="0.85" />
-              <polygon points="-24,0 0,-4 24,0 0,4" fill="#00394D" opacity="0.55" />
-              <polygon points="0,-16 2,0 0,16 -2,0" fill="#c1925f" />
-              <circle r="2" fill="#00394D" />
-              <text y="-30" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="#00394D" text-anchor="middle" letter-spacing="0.15em">N</text>
-              <text y="34" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.6)" text-anchor="middle" letter-spacing="0.15em">S</text>
-              <text x="32" y="3" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.6)" text-anchor="middle" letter-spacing="0.15em">E</text>
-              <text x="-32" y="3" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.6)" text-anchor="middle" letter-spacing="0.15em">W</text>
-            </g>
-
-            <!-- SEA BREEZE PIN — pulse ring + gold marker -->
-            <g class="map-pin" transform="translate(290,410)">
-              <circle class="pin-pulse" r="14" fill="none" stroke="#c1925f" stroke-width="1.2" opacity="0.8" />
-              <circle class="pin-pulse pin-pulse-2" r="14" fill="none" stroke="#c1925f" stroke-width="0.8" opacity="0.6" />
-              <circle r="6" fill="#c1925f" />
-              <circle r="2.2" fill="#f5ede1" />
-              <!-- Label hairline + text -->
-              <line x1="0" y1="-8" x2="0" y2="-34" stroke="#00394D" stroke-width="0.7" />
-              <circle cx="0" cy="-34" r="1.6" fill="#00394D" />
-              <text x="0" y="-42" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="11" fill="#00394D" letter-spacing="0.1em">Sea Breeze Beach House</text>
-              <text x="0" y="-56" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="9" fill="rgba(0,57,77,0.6)" letter-spacing="0.18em">· Maxwell Coast ·</text>
+            <!-- SEA BREEZE PIN (south coast, Maxwell/Christ Church) -->
+            <g class="map-pin" transform="translate(220,492)">
+              <circle class="pin-pulse" r="16" fill="none" stroke="#c1925f" stroke-width="1.3" opacity="0.85" />
+              <circle class="pin-pulse pin-pulse-2" r="16" fill="none" stroke="#c1925f" stroke-width="0.9" opacity="0.65" />
+              <circle r="7" fill="#c1925f" />
+              <circle r="2.6" fill="#fbf3e4" />
+              <line x1="0" y1="-10" x2="0" y2="-38" stroke="#00394D" stroke-width="0.8" />
+              <circle cx="0" cy="-38" r="1.8" fill="#00394D" />
+              <text x="0" y="-48" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="12" fill="#00394D" letter-spacing="0.12em">Sea Breeze Beach House</text>
+              <text x="0" y="-64" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="10" fill="rgba(0,57,77,0.6)" letter-spacing="0.22em">· Maxwell Coast ·</text>
             </g>
 
           </svg>

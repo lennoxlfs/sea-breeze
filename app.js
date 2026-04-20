@@ -60,7 +60,7 @@ function bootMotion() {
 
   // Generic reveal observer — toggles .is-in on reveal primitives. Used by
   // every section; ScrollTrigger effects layer on top for extra polish.
-  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow');
+  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow, .barbados');
   if (prefersReducedMotion) {
     revealables.forEach(el => el.classList.add('is-in'));
   } else if ('IntersectionObserver' in window) {
@@ -71,7 +71,7 @@ function bootMotion() {
           io.unobserve(e.target);
         }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     revealables.forEach(el => io.observe(el));
   }
 
