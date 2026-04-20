@@ -60,7 +60,7 @@ function bootMotion() {
 
   // Generic reveal observer — toggles .is-in on reveal primitives. Used by
   // every section; ScrollTrigger effects layer on top for extra polish.
-  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow, .reveal-clip');
+  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow');
   if (prefersReducedMotion) {
     revealables.forEach(el => el.classList.add('is-in'));
   } else if ('IntersectionObserver' in window) {

@@ -365,28 +365,9 @@ em { font-style: italic; }
 .reveal-right { transform: translateX(36px); }
 .reveal-right.is-in { transform: translateX(0); }
 
-/* Clip-path reveal for gallery images — unveils from below like a curtain */
-.reveal-clip {
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 1100ms var(--ease-nautical);
-  transition-delay: calc(var(--i, 0) * 90ms);
-}
-.reveal-clip.is-in { clip-path: inset(0 0 0% 0); }
-.reveal-clip > img {
-  transform: scale(1.12);
-  transition: transform 1800ms var(--ease-nautical);
-  transition-delay: calc(var(--i, 0) * 90ms);
-}
-.reveal-clip.is-in > img { transform: scale(1); }
-
 /* Counter module — JS animates textContent from 0 to data-target */
 .stat-num[data-count] {
   font-variant-numeric: tabular-nums;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-clip { clip-path: none; transition: none; }
-  .reveal-clip > img { transform: none; transition: none; }
 }
 
 /* Word-split stagger (phase 2 hero headline). Each .word has its
