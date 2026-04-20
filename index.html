@@ -42,8 +42,8 @@
   <!-- Preload hero image for fast first paint -->
   <link rel="preload" as="image" href="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse-05-resort-01-header-6333221d8c4ec.jpeg" />
 
-  <!-- Fonts — art-tier pairing: Fraunces (variable display serif) + Inter (body) -->
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts — Cormorant Garamond (display serif) + Urbanist (body) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 
   <!-- Motion stack: GSAP + ScrollTrigger + Lenis. Defer so nothing blocks LCP.
@@ -310,9 +310,9 @@
        Poster shows while video loads or on devices that cannot autoplay.
        Image source: Sea Breeze CDN — resort pool/aerial view
   ============================================================ -->
-  <section class="hero" id="hero" data-parallax>
+  <section class="hero" id="hero">
 
-    <div class="hero-video-wrap" data-parallax-target>
+    <div class="hero-video-wrap">
       <video
         class="hero-video"
         autoplay
@@ -323,49 +323,39 @@
       >
         <source src="https://symphony.cdn.tambourine.com/sea-breeze-beach-house/media/seabreezebeachhouse_video_hero-1-6322235255cbb.mp4" type="video/mp4" />
       </video>
-      <!-- Palette-tuned gradient wash (not stock black): ink veil at the
-           foot, seafoam spotlight behind the headline, soft coral bloom
-           at the bottom-right rule of thirds. Sits above the video. -->
-      <div class="hero-overlay" aria-hidden="true"></div>
-      <div class="hero-grain" aria-hidden="true"></div>
+      <div class="hero-overlay"></div>
     </div>
 
     <!-- HERO CONTENT -->
     <div class="hero-content">
 
-      <p class="hero-eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Barbados · Maxwell Coast</p>
+      <p class="hero-eyebrow">Barbados · South Coast</p>
 
-      <h1 class="hero-headline" data-split data-text="Chase your bliss">
-        Chase your bliss
-      </h1>
+      <h1 class="hero-headline">Chase Your<br /><em>Bliss</em></h1>
       <span class="sr-only">Sea Breeze Beach House — All-Inclusive Beachfront Resort, Maxwell Coast, Barbados</span>
 
-      <p class="hero-tagline reveal reveal-slow">
-        Every meal, every drink, every sunset — all included,
-        <em>on the sand at Maxwell Coast.</em>
-      </p>
-
-      <div class="hero-ctas reveal reveal-slow">
-        <a href="#booking" class="btn-brand btn-brand--primary">
-          Check Availability
-          <svg class="btn-arrow" viewBox="0 0 20 20" aria-hidden="true" fill="none"><path d="M3 10h14m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#accommodations" class="btn-brand btn-brand--ghost">Explore the Property</a>
+      <!-- All-inclusive glass block — sits between headline and tagline -->
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        All-Inclusive
+        <span class="badge-dot"></span>
       </div>
 
-      <!-- BOOKING WIDGET — liquid-glass frosted panel -->
-      <div class="booking-widget glass" id="booking" role="search" aria-label="Check room availability">
+      <p class="hero-tagline">Every meal, every drink, every sunset —<br />all included at Maxwell Coast, Barbados.</p>
+
+      <!-- BOOKING WIDGET — Glass / frosted-glass style -->
+      <div class="booking-widget" id="booking" role="search" aria-label="Check room availability">
         <div class="booking-fields">
           <div class="booking-field">
             <label for="checkin">Check-in</label>
             <input type="date" id="checkin" aria-label="Check-in date" />
           </div>
-          <div class="booking-divider" aria-hidden="true"></div>
+          <div class="booking-divider"></div>
           <div class="booking-field">
             <label for="checkout">Check-out</label>
             <input type="date" id="checkout" aria-label="Check-out date" />
           </div>
-          <div class="booking-divider" aria-hidden="true"></div>
+          <div class="booking-divider"></div>
           <div class="booking-field">
             <label for="guests">Guests</label>
             <select id="guests" aria-label="Number of guests">
@@ -376,72 +366,31 @@
               <option>5+ Guests</option>
             </select>
           </div>
-          <button class="btn-check-avail" aria-label="Check availability and book your stay">
-            <span>Check Availability</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true" fill="none"><path d="M3 10h14m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+          <button class="btn-check-avail" aria-label="Check availability and book your stay">Check Availability</button>
         </div>
       </div>
     </div>
 
-    <!-- Compass-rose scroll indicator (subtle vintage nautical flare) -->
-    <a href="#welcome" class="hero-scroll" aria-label="Scroll to discover more">
-      <span class="hero-scroll-label">Scroll</span>
-      <span class="compass" aria-hidden="true">
-        <svg viewBox="0 0 64 64" fill="none">
-          <circle cx="32" cy="32" r="27" stroke="currentColor" stroke-width="1" opacity="0.55" />
-          <circle cx="32" cy="32" r="21" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 3" opacity="0.55" />
-          <g class="compass-needle">
-            <path d="M32 10 L35 32 L32 30 L29 32 Z" fill="currentColor" opacity="0.95"/>
-            <path d="M32 54 L35 32 L32 34 L29 32 Z" fill="currentColor" opacity="0.35"/>
-          </g>
-          <g opacity="0.75" font-family="serif" font-size="6" fill="currentColor">
-            <text x="32" y="9"  text-anchor="middle">N</text>
-            <text x="57" y="34" text-anchor="middle">E</text>
-            <text x="32" y="60" text-anchor="middle">S</text>
-            <text x="7"  y="34" text-anchor="middle">W</text>
-          </g>
-        </svg>
-      </span>
+    <!-- Scroll indicator -->
+    <a href="#welcome" class="hero-scroll" aria-label="Scroll down">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </a>
   </section>
 
   <!-- ============================================================
-       TRUST STRIP — liquid-glass rating pills (4 platforms).
-       Trademark-safe: platform is cited, not a brand logo asset.
-       Each pill stagger-reveals on scroll via .reveal.
+       TRUST STRIP — Visible social proof directly below hero.
+       Surfaces the 4.4★ / 768 reviews / awards that research
+       flagged as "invisible on the current site".
   ============================================================ -->
-  <section class="trust-strip" aria-label="Guest ratings across booking platforms">
+  <section class="trust-strip" aria-label="Trust and recognition">
     <div class="container">
       <ul class="trust-row" role="list">
-        <li class="reveal" style="--i:0">
-          <a class="trust-pill glass-pill" href="https://www.google.com/search?q=Sea+Breeze+Beach+House+Barbados+reviews" target="_blank" rel="noopener" aria-label="See our 4.4-star Google reviews — 768 reviews">
-            <span class="trust-dot" data-platform="google" aria-hidden="true"></span>
-            <span class="trust-rating"><span class="trust-star" aria-hidden="true">★</span>4.4</span>
-            <span class="trust-meta"><span class="trust-platform">Google</span><span class="trust-count">768 reviews</span></span>
-          </a>
-        </li>
-        <li class="reveal" style="--i:1">
-          <a class="trust-pill glass-pill" href="https://www.tripadvisor.com/Hotel_Review-g293871-d593066-Reviews-Sea_Breeze_Beach_House-Saint_Lawrence_Gap_Christ_Church_Parish_Barbados.html" target="_blank" rel="noopener" aria-label="Read our Tripadvisor reviews — 4.5 stars, Travellers' Choice">
-            <span class="trust-dot" data-platform="tripadvisor" aria-hidden="true"></span>
-            <span class="trust-rating"><span class="trust-star" aria-hidden="true">★</span>4.5</span>
-            <span class="trust-meta"><span class="trust-platform">Tripadvisor</span><span class="trust-count">Travellers' Choice</span></span>
-          </a>
-        </li>
-        <li class="reveal" style="--i:2">
-          <a class="trust-pill glass-pill" href="https://www.booking.com/hotel/bb/sea-breeze-beach-house.html" target="_blank" rel="noopener" aria-label="Booking.com Traveller Review Award 2026 — 9.1 out of 10">
-            <span class="trust-dot" data-platform="booking" aria-hidden="true"></span>
-            <span class="trust-rating">9.1</span>
-            <span class="trust-meta"><span class="trust-platform">Booking.com</span><span class="trust-count">Traveller Award 2026</span></span>
-          </a>
-        </li>
-        <li class="reveal" style="--i:3">
-          <a class="trust-pill glass-pill" href="#awards" aria-label="See our Aspire Inclusivity Award 2025">
-            <span class="trust-dot" data-platform="aspire" aria-hidden="true"></span>
-            <span class="trust-rating">2025</span>
-            <span class="trust-meta"><span class="trust-platform">Aspire</span><span class="trust-count">Inclusivity Award</span></span>
-          </a>
-        </li>
+        <li><span class="trust-stars" aria-hidden="true">★★★★★</span><span>4.4 · 768 Google reviews</span></li>
+        <li><span>Aspire Inclusivity Award 2025</span></li>
+        <li><span>Booking.com Traveller Review 2026</span></li>
+        <li><span>AAA Rated · Ocean Hotels</span></li>
       </ul>
     </div>
   </section>

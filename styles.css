@@ -45,10 +45,10 @@
   --bg-dark:  var(--ink);
 
   /* === TYPE === */
-  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
-  --font-body:    'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Urbanist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono:    ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
-  --display-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 0;
+  --display-settings: normal;
 
   /* Type ramp — fluid, editorial */
   --fs-hero:    clamp(4rem, 9vw, 8.5rem);
@@ -106,15 +106,15 @@
   --dur-slow:    600ms;
   --dur-cinema:  900ms;
 
-  /* === LEGACY ALIASES (tokens being migrated; removed in phase 7) === */
-  --deep-teal:   var(--ink);
-  --mid-teal:    var(--ink-deep);
-  --teal-accent: var(--seafoam-deep);
-  --teal-light:  var(--seafoam-soft);
-  --gold:        var(--gold-sand);
-  --gold-light:  var(--gold-sand-soft);
-  --cream-dark:  var(--cream-deep);
-  --sand:        var(--cream-deep);
+  /* === V1 palette (reverted per user request — old look) === */
+  --deep-teal:   #00394D;
+  --mid-teal:    #1D4B5B;
+  --teal-accent: #59a3aa;
+  --teal-light:  #91c3c7;
+  --gold:        #c1925f;
+  --gold-light:  #d4a96f;
+  --cream-dark:  #ede5dd;
+  --sand:        #e5ded6;
 }
 
 /* ----------------------------------------------------------------
@@ -148,13 +148,12 @@ img, video { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
 summary:focus-visible, [role="button"]:focus-visible {
-  outline: 2px solid var(--seafoam);
-  outline-offset: 3px;
-  border-radius: 2px;
+  outline: 2px solid var(--teal-accent);
+  outline-offset: 2px;
 }
 button, input, select { font-family: inherit; }
 ul { list-style: none; }
-::selection { background: var(--seafoam-soft); color: var(--ink-deep); }
+::selection { background: var(--teal-light); color: var(--deep-teal); }
 
 /* ----------------------------------------------------------------
    TYPOGRAPHY
@@ -162,20 +161,19 @@ ul { list-style: none; }
 h1, h2, h3, h4, h5 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  color: var(--text-display);
-  font-variation-settings: var(--display-settings);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
 }
 
-h1 { font-size: var(--fs-hero); font-weight: 300; letter-spacing: -0.035em; line-height: 0.98; }
-h2 { font-size: var(--fs-h2); letter-spacing: -0.028em; line-height: 1.04; }
-h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; }
-h4 { font-size: var(--fs-h4); letter-spacing: -0.01em; }
-h5 { font-size: 0.8rem; font-family: var(--font-body); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
+h1 { font-size: clamp(3.5rem, 7vw, 7rem); font-weight: 300; }
+h2 { font-size: clamp(2.4rem, 4vw, 4rem); }
+h3 { font-size: clamp(1.8rem, 2.5vw, 2.4rem); }
+h4 { font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
+h5 { font-size: 0.8rem; font-family: var(--font-body); font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
 
-p { font-size: var(--fs-body); line-height: 1.72; color: var(--text-body); }
-em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
+p { font-size: clamp(0.95rem, 1.1vw, 1.05rem); line-height: 1.75; color: var(--text-body); }
+em { font-style: italic; }
 
 /* Editorial drop-cap (used in phase 3 intro) */
 .dropcap::first-letter {
@@ -189,30 +187,20 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   color: var(--coral);
 }
 
-/* Eyebrow / section label — also used as vintage-cartographer caption */
+/* Eyebrow / section label */
 .section-label,
 .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   font-family: var(--font-body);
-  font-size: var(--fs-eyebrow);
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--seafoam-deep);
-  margin-bottom: 18px;
-}
-.section-label::before,
-.eyebrow::before {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.7;
+  color: var(--teal-accent);
+  margin-bottom: 16px;
 }
 .section-label.light,
-.eyebrow.light { color: var(--seafoam-soft); }
+.eyebrow.light { color: rgba(255,255,255,0.6); }
 
 .section-header {
   text-align: center;
@@ -659,7 +647,7 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
 }
 
 /* ----------------------------------------------------------------
-   HERO — art-tier liquid glass + subtle vintage cartographer flare
+   HERO
 ---------------------------------------------------------------- */
 .hero {
   position: relative;
@@ -668,7 +656,6 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: var(--ink-veil);
 }
 
 .hero-video-wrap {
@@ -682,212 +669,99 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-  will-change: transform;
 }
 
-/* Palette-tuned overlay — NOT stock black.
-   Layer 1: ink veil anchoring the foot for legibility.
-   Layer 2: seafoam spotlight behind the headline (top-left bias).
-   Layer 3: soft coral bloom at the bottom-right rule of thirds. */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 45% at 78% 82%, rgba(228, 107, 96, 0.18) 0%, rgba(228, 107, 96, 0) 60%),
-    radial-gradient(55% 50% at 28% 32%, rgba(78, 205, 196, 0.22) 0%, rgba(78, 205, 196, 0) 60%),
-    linear-gradient(180deg, rgba(4, 25, 43, 0.18) 0%, rgba(4, 25, 43, 0.25) 35%, rgba(4, 25, 43, 0.72) 100%);
-  mix-blend-mode: normal;
-}
-
-/* SVG noise — adds tactile film grain without killing perf. */
-.hero-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.18;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  background-size: 240px 240px;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 30, 45, 0.65) 0%,
+    rgba(0, 57, 77, 0.45) 50%,
+    rgba(0, 30, 45, 0.6) 100%
+  );
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 140px var(--container-px) 96px;
-  max-width: 960px;
+  padding: 120px var(--container-px) 80px;
+  max-width: 880px;
   width: 100%;
 }
 
-/* Eyebrow — hairline dot prefix, Barbados · Maxwell Coast */
 .hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(245, 237, 225, 0.78);
-  margin-bottom: 32px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 20px;
 }
-.hero-eyebrow .eyebrow-dot {
-  width: 6px;
-  height: 6px;
+
+/* All-inclusive glass pill — between headline and tagline */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 18px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.88);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.badge-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background: var(--seafoam);
-  box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.18);
+  background: var(--gold);
   flex-shrink: 0;
 }
 
-/* Headline — Fraunces variable, optical-sized for display.
-   data-split script wraps each word in .split-word for a staggered
-   reveal. "bliss" picks up italic + SOFT axis for handwritten warmth. */
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 11vw, 10.5rem);
-  font-weight: 400;
-  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  color: var(--cream);
-  margin: 0 0 28px;
-  text-wrap: balance;
+  font-size: clamp(4.5rem, 10vw, 9.5rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-white);
+  margin-bottom: 24px;
 }
 .hero-headline em {
   font-style: italic;
-  font-weight: 400;
-  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
-  color: var(--seafoam-soft);
-}
-
-/* Tagline — pale cream, tight leading, vintage dashed underline under the em */
-.hero-tagline {
-  font-family: var(--font-body);
-  font-size: clamp(1rem, 1.3vw, 1.18rem);
   font-weight: 300;
-  color: rgba(245, 237, 225, 0.82);
-  line-height: 1.65;
-  margin: 0 auto 44px;
-  max-width: 620px;
-  letter-spacing: 0.01em;
-}
-.hero-tagline em {
-  font-style: italic;
-  font-family: var(--font-display);
-  font-weight: 400;
-  color: var(--cream);
-  background-image: linear-gradient(to right, rgba(245,237,225,0.55) 55%, transparent 0);
-  background-repeat: repeat-x;
-  background-position: 0 100%;
-  background-size: 6px 1px;
-  padding-bottom: 4px;
+  color: rgba(255,255,255,0.92);
 }
 
-/* ----------------------------------------------------------------
-   BTN-BRAND — unified button system (primary + ghost + arrow)
----------------------------------------------------------------- */
-.hero-ctas {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-bottom: 56px;
+.hero-tagline {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.6;
+  margin-bottom: 52px;
+  letter-spacing: 0.02em;
 }
 
-.btn-brand {
-  --btn-bg: var(--ink);
-  --btn-fg: var(--cream);
-  --btn-bd: var(--ink);
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 28px;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--btn-fg);
-  background: var(--btn-bg);
-  border: 1px solid var(--btn-bd);
-  border-radius: 999px;
-  cursor: pointer;
-  overflow: hidden;
-  transition:
-    transform var(--dur-med) var(--ease-nautical),
-    background var(--dur-med) var(--ease-nautical),
-    color var(--dur-med) var(--ease-nautical),
-    border-color var(--dur-med) var(--ease-nautical),
-    box-shadow var(--dur-med) var(--ease-nautical);
-}
-.btn-brand::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--seafoam) 0%, var(--seafoam-deep) 100%);
-  transform: translateY(101%);
-  transition: transform var(--dur-med) var(--ease-nautical);
-  z-index: 0;
-}
-.btn-brand:hover::before { transform: translateY(0); }
-.btn-brand > * { position: relative; z-index: 1; }
-.btn-brand:hover {
-  color: var(--ink-deep);
-  border-color: var(--seafoam);
-  box-shadow: 0 14px 34px -14px rgba(10, 61, 98, 0.55);
-}
-.btn-brand:hover .btn-arrow { transform: translateX(4px); }
-.btn-brand:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 3px; }
-.btn-brand:active { transform: translateY(1px); }
-
-.btn-brand--primary {
-  --btn-bg: var(--cream);
-  --btn-fg: var(--ink-deep);
-  --btn-bd: var(--cream);
-  box-shadow: 0 18px 40px -18px rgba(4, 25, 43, 0.55);
-}
-
-.btn-brand--ghost {
-  --btn-bg: transparent;
-  --btn-fg: var(--cream);
-  --btn-bd: rgba(245, 237, 225, 0.35);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
-.btn-arrow {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  transition: transform var(--dur-med) var(--ease-nautical);
-}
-
-/* ----------------------------------------------------------------
-   BOOKING WIDGET — liquid-glass frosted panel on hero
----------------------------------------------------------------- */
-.hero .booking-widget,
-.booking-widget.glass {
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: saturate(160%) blur(22px);
-  -webkit-backdrop-filter: saturate(160%) blur(22px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  padding: 6px;
-  max-width: 760px;
+/* Booking Widget — Hero */
+.booking-widget {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 8px;
+  max-width: 720px;
   margin: 0 auto;
-  box-shadow:
-    0 24px 60px -24px rgba(4, 25, 43, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-@supports not (backdrop-filter: blur(1px)) {
-  .hero .booking-widget,
-  .booking-widget.glass { background: rgba(255, 255, 255, 0.22); }
 }
 
 .booking-fields {
@@ -900,262 +774,102 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 12px 22px;
+  padding: 14px 20px;
   min-width: 0;
-  border-radius: 999px;
-  transition: background var(--dur-med) var(--ease-nautical);
 }
-.booking-field:focus-within { background: rgba(255, 255, 255, 0.12); }
 .booking-field label {
-  font-family: var(--font-body);
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(245, 237, 225, 0.72);
-  margin-bottom: 4px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
 }
 .booking-field input,
 .booking-field select {
   background: none;
   border: none;
   outline: none;
-  color: var(--cream);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  color: var(--text-white);
+  font-size: 0.92rem;
   font-weight: 400;
   cursor: pointer;
   padding: 0;
   width: 100%;
 }
 .booking-field input[type="date"] { color-scheme: dark; }
-.booking-field select option { color: var(--ink-deep); background: var(--cream); }
+.booking-field select option { color: var(--text-dark); background: var(--bg-white); }
 
 .booking-divider {
   width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.28), transparent);
-  margin: 10px 0;
+  background: rgba(255,255,255,0.2);
+  margin: 8px 0;
   flex-shrink: 0;
 }
 
 .btn-check-avail {
-  position: relative;
   flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 30px;
-  background: var(--ink-deep);
-  color: var(--cream);
+  padding: 0 32px;
+  background: var(--gold);
+  color: var(--text-white);
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   border: none;
-  border-radius: 999px;
   cursor: pointer;
-  overflow: hidden;
-  transition:
-    background var(--dur-med) var(--ease-nautical),
-    color var(--dur-med) var(--ease-nautical),
-    box-shadow var(--dur-med) var(--ease-nautical);
+  transition: background 0.3s var(--ease-out);
   white-space: nowrap;
   margin: 0;
 }
-.btn-check-avail svg {
-  width: 16px;
-  height: 16px;
-  transition: transform var(--dur-med) var(--ease-nautical);
-}
-.btn-check-avail:hover {
-  background: var(--seafoam);
-  color: var(--ink-deep);
-  box-shadow: 0 10px 26px -10px rgba(78, 205, 196, 0.55);
-}
-.btn-check-avail:hover svg { transform: translateX(4px); }
-.btn-check-avail:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 3px; }
+.btn-check-avail:hover { background: var(--gold-light); }
 
-/* ----------------------------------------------------------------
-   HERO SCROLL — compass-rose indicator (vintage cartographer flare)
----------------------------------------------------------------- */
 .hero-scroll {
   position: absolute;
-  bottom: 40px;
+  bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  color: rgba(245, 237, 225, 0.7);
-  text-decoration: none;
-  transition: color var(--dur-med) var(--ease-nautical);
+  color: rgba(255,255,255,0.5);
+  animation: bounce 2.4s ease-in-out infinite;
+  transition: color 0.2s;
 }
-.hero-scroll:hover { color: var(--cream); }
-.hero-scroll-label {
-  font-family: var(--font-body);
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-}
-.hero-scroll .compass {
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  animation: compass-float 5.2s var(--ease-nautical) infinite;
-}
-.hero-scroll .compass svg { width: 100%; height: 100%; display: block; }
-.hero-scroll .compass-needle {
-  transform-origin: 32px 32px;
-  animation: compass-drift 9s var(--ease-nautical) infinite;
-}
-@keyframes compass-float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(6px); }
-}
-@keyframes compass-drift {
-  0%, 100% { transform: rotate(-4deg); }
-  50%      { transform: rotate(4deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-scroll .compass,
-  .hero-scroll .compass-needle { animation: none; }
+.hero-scroll:hover { color: rgba(255,255,255,0.9); }
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
 }
 
 /* ----------------------------------------------------------------
-   TRUST STRIP — liquid-glass rating pills (4 platforms)
+   TRUST STRIP — simple social-proof row under the hero
 ---------------------------------------------------------------- */
 .trust-strip {
-  position: relative;
-  padding: 40px 0;
+  padding: 28px 0;
   background: var(--cream);
-  border-bottom: 1px solid var(--ink-08);
+  border-bottom: 1px solid rgba(0,57,77,0.08);
 }
-.trust-strip::before,
-.trust-strip::after {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  height: 1px;
-  background-image: linear-gradient(to right, var(--ink-20) 50%, transparent 0);
-  background-size: 6px 1px;
-  background-repeat: repeat-x;
-  opacity: 0.7;
-}
-.trust-strip::before { top: 0; }
-.trust-strip::after  { bottom: 0; }
-
 .trust-row {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
-  gap: 14px;
+  align-items: center;
+  gap: 40px;
   flex-wrap: wrap;
-}
-.trust-row > li {
-  transition-delay: calc(var(--i, 0) * 90ms);
-}
-
-.trust-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 20px 10px 14px;
-  border-radius: 999px;
-  text-decoration: none;
-  color: var(--ink-deep);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: saturate(160%) blur(10px);
-  -webkit-backdrop-filter: saturate(160%) blur(10px);
-  border: 1px solid rgba(10, 61, 98, 0.1);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.9) inset,
-    0 10px 28px -18px rgba(10, 61, 98, 0.35);
-  transition:
-    transform var(--dur-med) var(--ease-nautical),
-    box-shadow var(--dur-med) var(--ease-nautical),
-    border-color var(--dur-med) var(--ease-nautical);
-}
-.trust-pill:hover {
-  transform: translateY(-2px);
-  border-color: rgba(10, 61, 98, 0.2);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.95) inset,
-    0 18px 36px -18px rgba(10, 61, 98, 0.45);
-}
-.trust-pill:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 3px; }
-
-.trust-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: var(--ink);
-  box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.08);
-  transition: box-shadow var(--dur-med) var(--ease-nautical);
-}
-.trust-pill:hover .trust-dot { box-shadow: 0 0 0 4px rgba(10, 61, 98, 0.14); }
-.trust-dot[data-platform="google"]      { background: #4285F4; box-shadow: 0 0 0 3px rgba(66,133,244,0.14); }
-.trust-dot[data-platform="tripadvisor"] { background: #00AA6C; box-shadow: 0 0 0 3px rgba(0,170,108,0.14); }
-.trust-dot[data-platform="booking"]     { background: #003580; box-shadow: 0 0 0 3px rgba(0,53,128,0.14); }
-.trust-dot[data-platform="aspire"]      { background: var(--gold-sand); box-shadow: 0 0 0 3px rgba(212,138,64,0.18); }
-
-.trust-rating {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 500;
-  font-variation-settings: "opsz" 36;
-  color: var(--ink-deep);
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.trust-star {
-  color: var(--gold-sand);
-  font-size: 0.95rem;
-  line-height: 1;
-}
-.trust-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  line-height: 1.15;
-}
-.trust-platform {
   font-family: var(--font-body);
   font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--ink-deep);
-}
-.trust-count {
-  font-family: var(--font-body);
-  font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-60);
+  letter-spacing: 0.08em;
+  color: var(--deep-teal);
 }
-
-@media (max-width: 720px) {
-  .hero-content { padding: 128px 20px 88px; }
-  .booking-fields { flex-wrap: wrap; gap: 4px; padding: 4px; }
-  .booking-divider { display: none; }
-  .booking-field { flex: 1 1 46%; border-radius: 28px; padding: 10px 16px; }
-  .btn-check-avail { flex: 1 1 100%; padding: 14px; justify-content: center; }
-  .hero .booking-widget,
-  .booking-widget.glass { border-radius: 28px; padding: 4px; }
-  .hero-ctas { gap: 10px; }
-  .btn-brand { padding: 14px 22px; font-size: 0.72rem; }
-  .trust-row { gap: 10px; }
-  .trust-pill { padding: 8px 16px 8px 12px; }
+.trust-row li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.trust-stars {
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  font-size: 0.9rem;
 }
 
 /* ----------------------------------------------------------------
