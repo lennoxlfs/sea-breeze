@@ -894,9 +894,9 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .trust-strip {
   position: relative;
-  padding: 36px 0;
-  background: var(--cream);
-  border-bottom: 1px solid rgba(0, 57, 77, 0.08);
+  padding: 36px 0 56px;
+  background: linear-gradient(to bottom, var(--cream) 0%, var(--cream) 55%, var(--bg-white) 100%);
+  border-bottom: 0;
 }
 .trust-row {
   list-style: none;
@@ -1006,7 +1006,7 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .welcome {
   padding: var(--section-py) 0;
-  background: var(--bg-white);
+  background: linear-gradient(to bottom, var(--bg-white) 0%, var(--bg-white) 78%, var(--bg-cream) 100%);
 }
 
 .welcome-grid {
@@ -1073,7 +1073,7 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .experience {
   padding: var(--section-py) 0;
-  background: var(--bg-cream);
+  background: linear-gradient(to bottom, var(--bg-cream) 0%, var(--bg-cream) 78%, var(--bg-white) 100%);
 }
 
 .experience-grid {
@@ -1164,7 +1164,7 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .accommodations {
   padding: var(--section-py) 0;
-  background: var(--bg-white);
+  background: linear-gradient(to bottom, var(--bg-white) 0%, var(--bg-white) 78%, var(--bg-cream) 100%);
 }
 
 .rooms-grid {
@@ -1254,7 +1254,7 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .dining {
   padding: var(--section-py) 0;
-  background: var(--bg-cream);
+  background: linear-gradient(to bottom, var(--bg-cream) 0%, var(--bg-cream) 70%, var(--deep-teal) 100%);
 }
 
 .dining-grid {
@@ -1309,6 +1309,7 @@ em { font-style: italic; }
 .gallery {
   padding: var(--section-py) 0;
   background: var(--bg-white);
+  position: relative;
 }
 
 .gallery-grid {
@@ -1346,6 +1347,7 @@ em { font-style: italic; }
 .awards {
   padding: var(--section-py) 0;
   background: var(--deep-teal);
+  position: relative;
 }
 .awards .section-header { max-width: 580px; }
 .awards .section-label  { color: var(--teal-light); }
@@ -1431,7 +1433,7 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .reviews {
   padding: var(--section-py) 0;
-  background: var(--bg-cream);
+  background: linear-gradient(to bottom, var(--bg-cream) 0%, var(--bg-cream) 78%, var(--bg-white) 100%);
 }
 
 .reviews-grid {
@@ -1501,7 +1503,7 @@ em { font-style: italic; }
 /* ----------------------------------------------------------------
    SPA
 ---------------------------------------------------------------- */
-.spa { background: var(--deep-teal); }
+.spa { background: linear-gradient(to bottom, var(--deep-teal) 0%, var(--deep-teal) 75%, var(--bg-white) 100%); }
 .spa-inner { padding: var(--section-py) 0; }
 
 .spa-grid {
@@ -1543,7 +1545,7 @@ em { font-style: italic; }
 ---------------------------------------------------------------- */
 .weddings {
   padding: var(--section-py) 0;
-  background: var(--bg-white);
+  background: linear-gradient(to bottom, var(--bg-white) 0%, var(--bg-white) 78%, var(--bg-cream) 100%);
 }
 
 .celebration-grid {
@@ -1605,6 +1607,7 @@ em { font-style: italic; }
 .why-us {
   padding: var(--section-py) 0;
   background: var(--bg-cream);
+  position: relative;
 }
 
 .why-grid {
@@ -1634,10 +1637,17 @@ em { font-style: italic; }
    BARBADOS — Vintage cartographer map + modern minimal glass card.
    Cream paper background (matches trust strip) for seamless flow.
 ---------------------------------------------------------------- */
+/* FAQ sits between reviews (fades to white) and barbados (cream).
+   Start white, ease back to cream by the bottom. */
+.faq {
+  padding: var(--section-py) 0;
+  background: linear-gradient(to bottom, var(--bg-white) 0%, var(--bg-white) 78%, var(--cream) 100%);
+}
+
 .barbados {
   position: relative;
   padding: var(--section-py) 0;
-  background: var(--cream);
+  background: linear-gradient(to bottom, var(--cream) 0%, var(--cream) 78%, var(--bg-white) 100%);
   overflow: hidden;
 }
 .barbados::before {

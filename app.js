@@ -58,9 +58,9 @@ function bootMotion() {
     document.documentElement.classList.add('lenis');
   }
 
-  // Generic reveal observer — toggles .is-in on .reveal/.reveal-left/.reveal-right
-  // elements. Used by any section; phases 2-7 add art-tier refinements on top.
-  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow');
+  // Generic reveal observer — toggles .is-in on reveal primitives. Used by
+  // every section; ScrollTrigger effects layer on top for extra polish.
+  const revealables = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-slow, .reveal-clip');
   if (prefersReducedMotion) {
     revealables.forEach(el => el.classList.add('is-in'));
   } else if ('IntersectionObserver' in window) {
