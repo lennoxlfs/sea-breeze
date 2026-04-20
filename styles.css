@@ -659,7 +659,7 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
 }
 
 /* ----------------------------------------------------------------
-   HERO
+   HERO — art-tier liquid glass + subtle vintage cartographer flare
 ---------------------------------------------------------------- */
 .hero {
   position: relative;
@@ -668,6 +668,7 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: var(--ink-veil);
 }
 
 .hero-video-wrap {
@@ -681,99 +682,212 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   height: 100%;
   object-fit: cover;
   object-position: center;
+  will-change: transform;
 }
 
+/* Palette-tuned overlay — NOT stock black.
+   Layer 1: ink veil anchoring the foot for legibility.
+   Layer 2: seafoam spotlight behind the headline (top-left bias).
+   Layer 3: soft coral bloom at the bottom-right rule of thirds. */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(0, 30, 45, 0.65) 0%,
-    rgba(0, 57, 77, 0.45) 50%,
-    rgba(0, 30, 45, 0.6) 100%
-  );
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 78% 82%, rgba(228, 107, 96, 0.18) 0%, rgba(228, 107, 96, 0) 60%),
+    radial-gradient(55% 50% at 28% 32%, rgba(78, 205, 196, 0.22) 0%, rgba(78, 205, 196, 0) 60%),
+    linear-gradient(180deg, rgba(4, 25, 43, 0.18) 0%, rgba(4, 25, 43, 0.25) 35%, rgba(4, 25, 43, 0.72) 100%);
+  mix-blend-mode: normal;
+}
+
+/* SVG noise — adds tactile film grain without killing perf. */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 120px var(--container-px) 80px;
-  max-width: 880px;
+  padding: 140px var(--container-px) 96px;
+  max-width: 960px;
   width: 100%;
 }
 
+/* Eyebrow — hairline dot prefix, Barbados · Maxwell Coast */
 .hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 20px;
+  color: rgba(245, 237, 225, 0.78);
+  margin-bottom: 32px;
 }
-
-/* All-inclusive glass pill — between headline and tagline */
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 18px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.88);
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.badge-dot {
-  display: inline-block;
-  width: 4px;
-  height: 4px;
+.hero-eyebrow .eyebrow-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--seafoam);
+  box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.18);
   flex-shrink: 0;
 }
 
+/* Headline — Fraunces variable, optical-sized for display.
+   data-split script wraps each word in .split-word for a staggered
+   reveal. "bliss" picks up italic + SOFT axis for handwritten warmth. */
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 10vw, 9.5rem);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  color: var(--text-white);
-  margin-bottom: 24px;
+  font-size: clamp(4rem, 11vw, 10.5rem);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--cream);
+  margin: 0 0 28px;
+  text-wrap: balance;
 }
 .hero-headline em {
   font-style: italic;
-  font-weight: 300;
-  color: rgba(255,255,255,0.92);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  color: var(--seafoam-soft);
 }
 
+/* Tagline — pale cream, tight leading, vintage dashed underline under the em */
 .hero-tagline {
-  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.3vw, 1.18rem);
   font-weight: 300;
-  color: rgba(255,255,255,0.78);
-  line-height: 1.6;
-  margin-bottom: 52px;
-  letter-spacing: 0.02em;
+  color: rgba(245, 237, 225, 0.82);
+  line-height: 1.65;
+  margin: 0 auto 44px;
+  max-width: 620px;
+  letter-spacing: 0.01em;
+}
+.hero-tagline em {
+  font-style: italic;
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--cream);
+  background-image: linear-gradient(to right, rgba(245,237,225,0.55) 55%, transparent 0);
+  background-repeat: repeat-x;
+  background-position: 0 100%;
+  background-size: 6px 1px;
+  padding-bottom: 4px;
 }
 
-/* Booking Widget — Hero */
-.booking-widget {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 8px;
-  max-width: 720px;
+/* ----------------------------------------------------------------
+   BTN-BRAND — unified button system (primary + ghost + arrow)
+---------------------------------------------------------------- */
+.hero-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.btn-brand {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--cream);
+  --btn-bd: var(--ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-bd);
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform var(--dur-med) var(--ease-nautical),
+    background var(--dur-med) var(--ease-nautical),
+    color var(--dur-med) var(--ease-nautical),
+    border-color var(--dur-med) var(--ease-nautical),
+    box-shadow var(--dur-med) var(--ease-nautical);
+}
+.btn-brand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--seafoam) 0%, var(--seafoam-deep) 100%);
+  transform: translateY(101%);
+  transition: transform var(--dur-med) var(--ease-nautical);
+  z-index: 0;
+}
+.btn-brand:hover::before { transform: translateY(0); }
+.btn-brand > * { position: relative; z-index: 1; }
+.btn-brand:hover {
+  color: var(--ink-deep);
+  border-color: var(--seafoam);
+  box-shadow: 0 14px 34px -14px rgba(10, 61, 98, 0.55);
+}
+.btn-brand:hover .btn-arrow { transform: translateX(4px); }
+.btn-brand:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 3px; }
+.btn-brand:active { transform: translateY(1px); }
+
+.btn-brand--primary {
+  --btn-bg: var(--cream);
+  --btn-fg: var(--ink-deep);
+  --btn-bd: var(--cream);
+  box-shadow: 0 18px 40px -18px rgba(4, 25, 43, 0.55);
+}
+
+.btn-brand--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--cream);
+  --btn-bd: rgba(245, 237, 225, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.btn-arrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform var(--dur-med) var(--ease-nautical);
+}
+
+/* ----------------------------------------------------------------
+   BOOKING WIDGET — liquid-glass frosted panel on hero
+---------------------------------------------------------------- */
+.hero .booking-widget,
+.booking-widget.glass {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: saturate(160%) blur(22px);
+  -webkit-backdrop-filter: saturate(160%) blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 6px;
+  max-width: 760px;
   margin: 0 auto;
+  box-shadow:
+    0 24px 60px -24px rgba(4, 25, 43, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .hero .booking-widget,
+  .booking-widget.glass { background: rgba(255, 255, 255, 0.22); }
 }
 
 .booking-fields {
@@ -786,71 +900,262 @@ em { font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 100; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 14px 20px;
+  padding: 12px 22px;
   min-width: 0;
+  border-radius: 999px;
+  transition: background var(--dur-med) var(--ease-nautical);
 }
+.booking-field:focus-within { background: rgba(255, 255, 255, 0.12); }
 .booking-field label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 6px;
+  color: rgba(245, 237, 225, 0.72);
+  margin-bottom: 4px;
 }
 .booking-field input,
 .booking-field select {
   background: none;
   border: none;
   outline: none;
-  color: var(--text-white);
-  font-size: 0.92rem;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
   font-weight: 400;
   cursor: pointer;
   padding: 0;
   width: 100%;
 }
 .booking-field input[type="date"] { color-scheme: dark; }
-.booking-field select option { color: var(--text-dark); background: var(--bg-white); }
+.booking-field select option { color: var(--ink-deep); background: var(--cream); }
 
 .booking-divider {
   width: 1px;
-  background: rgba(255,255,255,0.2);
-  margin: 8px 0;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.28), transparent);
+  margin: 10px 0;
   flex-shrink: 0;
 }
 
 .btn-check-avail {
+  position: relative;
   flex-shrink: 0;
-  padding: 0 32px;
-  background: var(--gold);
-  color: var(--text-white);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 30px;
+  background: var(--ink-deep);
+  color: var(--cream);
   font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   border: none;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background 0.3s var(--ease-out);
+  overflow: hidden;
+  transition:
+    background var(--dur-med) var(--ease-nautical),
+    color var(--dur-med) var(--ease-nautical),
+    box-shadow var(--dur-med) var(--ease-nautical);
   white-space: nowrap;
   margin: 0;
 }
-.btn-check-avail:hover { background: var(--gold-light); }
+.btn-check-avail svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--dur-med) var(--ease-nautical);
+}
+.btn-check-avail:hover {
+  background: var(--seafoam);
+  color: var(--ink-deep);
+  box-shadow: 0 10px 26px -10px rgba(78, 205, 196, 0.55);
+}
+.btn-check-avail:hover svg { transform: translateX(4px); }
+.btn-check-avail:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 3px; }
 
+/* ----------------------------------------------------------------
+   HERO SCROLL — compass-rose indicator (vintage cartographer flare)
+---------------------------------------------------------------- */
 .hero-scroll {
   position: absolute;
-  bottom: 36px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  color: rgba(255,255,255,0.5);
-  animation: bounce 2.4s ease-in-out infinite;
-  transition: color 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(245, 237, 225, 0.7);
+  text-decoration: none;
+  transition: color var(--dur-med) var(--ease-nautical);
 }
-.hero-scroll:hover { color: rgba(255,255,255,0.9); }
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
+.hero-scroll:hover { color: var(--cream); }
+.hero-scroll-label {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+.hero-scroll .compass {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  animation: compass-float 5.2s var(--ease-nautical) infinite;
+}
+.hero-scroll .compass svg { width: 100%; height: 100%; display: block; }
+.hero-scroll .compass-needle {
+  transform-origin: 32px 32px;
+  animation: compass-drift 9s var(--ease-nautical) infinite;
+}
+@keyframes compass-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+@keyframes compass-drift {
+  0%, 100% { transform: rotate(-4deg); }
+  50%      { transform: rotate(4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll .compass,
+  .hero-scroll .compass-needle { animation: none; }
+}
+
+/* ----------------------------------------------------------------
+   TRUST STRIP — liquid-glass rating pills (4 platforms)
+---------------------------------------------------------------- */
+.trust-strip {
+  position: relative;
+  padding: 40px 0;
+  background: var(--cream);
+  border-bottom: 1px solid var(--ink-08);
+}
+.trust-strip::before,
+.trust-strip::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background-image: linear-gradient(to right, var(--ink-20) 50%, transparent 0);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+  opacity: 0.7;
+}
+.trust-strip::before { top: 0; }
+.trust-strip::after  { bottom: 0; }
+
+.trust-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.trust-row > li {
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 20px 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--ink-deep);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  border: 1px solid rgba(10, 61, 98, 0.1);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.9) inset,
+    0 10px 28px -18px rgba(10, 61, 98, 0.35);
+  transition:
+    transform var(--dur-med) var(--ease-nautical),
+    box-shadow var(--dur-med) var(--ease-nautical),
+    border-color var(--dur-med) var(--ease-nautical);
+}
+.trust-pill:hover {
+  transform: translateY(-2px);
+  border-color: rgba(10, 61, 98, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.95) inset,
+    0 18px 36px -18px rgba(10, 61, 98, 0.45);
+}
+.trust-pill:focus-visible { outline: 2px solid var(--seafoam); outline-offset: 3px; }
+
+.trust-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.08);
+  transition: box-shadow var(--dur-med) var(--ease-nautical);
+}
+.trust-pill:hover .trust-dot { box-shadow: 0 0 0 4px rgba(10, 61, 98, 0.14); }
+.trust-dot[data-platform="google"]      { background: #4285F4; box-shadow: 0 0 0 3px rgba(66,133,244,0.14); }
+.trust-dot[data-platform="tripadvisor"] { background: #00AA6C; box-shadow: 0 0 0 3px rgba(0,170,108,0.14); }
+.trust-dot[data-platform="booking"]     { background: #003580; box-shadow: 0 0 0 3px rgba(0,53,128,0.14); }
+.trust-dot[data-platform="aspire"]      { background: var(--gold-sand); box-shadow: 0 0 0 3px rgba(212,138,64,0.18); }
+
+.trust-rating {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  color: var(--ink-deep);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.trust-star {
+  color: var(--gold-sand);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.trust-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.15;
+}
+.trust-platform {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-deep);
+}
+.trust-count {
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+
+@media (max-width: 720px) {
+  .hero-content { padding: 128px 20px 88px; }
+  .booking-fields { flex-wrap: wrap; gap: 4px; padding: 4px; }
+  .booking-divider { display: none; }
+  .booking-field { flex: 1 1 46%; border-radius: 28px; padding: 10px 16px; }
+  .btn-check-avail { flex: 1 1 100%; padding: 14px; justify-content: center; }
+  .hero .booking-widget,
+  .booking-widget.glass { border-radius: 28px; padding: 4px; }
+  .hero-ctas { gap: 10px; }
+  .btn-brand { padding: 14px 22px; font-size: 0.72rem; }
+  .trust-row { gap: 10px; }
+  .trust-pill { padding: 8px 16px 8px 12px; }
 }
 
 /* ----------------------------------------------------------------
